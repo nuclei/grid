@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "module": "es6",
+    "target": "es6",
+    "declaration": false,
+    "removeComments": true,
+    "lib": [
+      "dom",
+      "es6"
+    ]
+  },
+  "include": [
+    "src/WebComponentSkeleton.ts"
+  ]
+}

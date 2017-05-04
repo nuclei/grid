@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Web Component Skeleton</title>
+    <script src="../dist/WebComponentSkeleton.js"></script>
+  </head>
+  <body>
+    <web-component-skeleton name="Lukas">😎</web-component-skeleton>
+    <script type="text/javascript">
+      document.querySelector('web-component-skeleton').addEventListener('name-clicked', (e) => {
+        console.log(e.detail.name);
+      })
+    </script>
+  </body>
+</html>
