@@ -1,26 +1,38 @@
 {
   "name": "web-component-skeleton",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A skeleton repo for bulding vanilla web components",
-  "main": "WebComponentSkeleton.js",
-  "devDependencies": {
-    "cpy-cli": "^1.0.1",
-    "rollup": "^0.41.6",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-typescript": "^0.8.1",
-    "snazzy": "^7.0.0",
-    "standard": "^10.0.2",
-    "typescript": "^2.3.2",
-    "typescript-eslint-parser": "^2.1.0"
+  "main": "dist/WebComponentSkeleton.js",
+  "config": {
+    "src": "src/WebComponentSkeleton.ts"
   },
-  "scripts": {
-    "build": "npm test && rollup -c",
-    "test": "standard src/*.ts --parser typescript-eslint-parser | snazzy && tsc src/*.ts --noEmit --pretty --alwaysStrict --noUnusedLocals --target ES5 --lib es6,dom"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/nuclei/web-component-skeleton"
+  },
+  "bugs": {
+    "url": "http://github.com/nuclei/web-component-skeleton/issues"
   },
   "keywords": [
     "vanilla web components",
     "web component skeleton"
   ],
   "author": "Lukas Oppermann",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "rollup": "^0.41.6",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-typescript": "^0.8.1",
+    "rollup-watch": "^3.2.2",
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.2",
+    "standard-readme": "^2.0.2",
+    "typescript": "^2.3.2",
+    "typescript-eslint-parser": "^2.1.0"
+  },
+  "scripts": {
+    "build": "npm test && rollup -c",
+    "build:watch": "npm run build -- -w",
+    "test": "standard src/*.ts --parser typescript-eslint-parser | snazzy && tsc src/*.ts --noEmit --pretty --alwaysStrict --noUnusedLocals --target ES5 --lib es6,dom && standard-readme"
+  }
 }

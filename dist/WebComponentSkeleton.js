@@ -40,7 +40,7 @@ class WebComponentSkeleton extends HTMLElement {
         this.disabled = false;
         let shadowRoot = this.attachShadow({ mode: 'open' });
         if (typeof ShadyCSS !== 'undefined') {
-            ShadyCSS.prepareTemplate(template, 'page-sections');
+            ShadyCSS.prepareTemplate(template, 'web-component-skeleton');
             ShadyCSS.styleElement(this);
         }
         shadowRoot.appendChild(document.importNode(template.content, true));

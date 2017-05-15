@@ -44,7 +44,7 @@ class WebComponentSkeleton extends HTMLElement { // eslint-disable-line no-unuse
     let shadowRoot = this.attachShadow({mode: 'open'})
     // check if polyfill is used
     if (typeof ShadyCSS !== 'undefined') {
-      ShadyCSS.prepareTemplate(template, 'page-sections') // eslint-disable-line no-undef
+      ShadyCSS.prepareTemplate(template, 'web-component-skeleton') // eslint-disable-line no-undef
       // apply css polyfill
       ShadyCSS.styleElement(this) // eslint-disable-line no-undef
     }
