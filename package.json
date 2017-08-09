@@ -35,6 +35,7 @@
     "build": "npm test && rollup -c",
     "build:watch": "npm run build -- -w",
     "demo": "cp -r node_modules/@webcomponents/webcomponentsjs docs/polyfill",
-    "test": "standard src/*.ts --parser typescript-eslint-parser | snazzy && tsc src/*.ts --noEmit --pretty --alwaysStrict --noUnusedLocals --target ES5 --lib es6,dom && standard-readme"
+    "test": "standard src/*.ts --parser typescript-eslint-parser | snazzy && tsc src/*.ts --noEmit --pretty --alwaysStrict --noUnusedLocals --target ES5 --lib es6,dom && standard-readme",
+    "travis": "npm run test"
   }
 }
