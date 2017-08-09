@@ -20,6 +20,7 @@
   "author": "Lukas Oppermann",
   "license": "MIT",
   "devDependencies": {
+    "@webcomponents/webcomponentsjs": "^1.0.7",
     "rollup": "^0.41.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-typescript": "^0.8.1",
@@ -33,6 +34,7 @@
   "scripts": {
     "build": "npm test && rollup -c",
     "build:watch": "npm run build -- -w",
+    "demo": "cp -r node_modules/@webcomponents/webcomponentsjs docs/polyfill",
     "test": "standard src/*.ts --parser typescript-eslint-parser | snazzy && tsc src/*.ts --noEmit --pretty --alwaysStrict --noUnusedLocals --target ES5 --lib es6,dom && standard-readme"
   }
 }
