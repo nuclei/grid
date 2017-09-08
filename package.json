@@ -1,5 +1,5 @@
 {
-  "name": "web-component-skeleton",
+  "name": "grid",
   "version": "0.0.0",
   "description": "A skeleton repo for bulding vanilla web components",
   "main": "dist/WebComponentSkeleton.js",
