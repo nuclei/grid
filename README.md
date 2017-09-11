@@ -1,4 +1,4 @@
-# Web-Component-Skeleton
+# Grid
 
 > An empty repo for starting your vanilla web component
 

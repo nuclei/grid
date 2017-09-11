@@ -1,21 +1,23 @@
 {
   "name": "grid",
   "version": "0.0.0",
-  "description": "A skeleton repo for bulding vanilla web components",
-  "main": "dist/WebComponentSkeleton.js",
+  "description": "A vanilla js web component grid based on css grid.",
+  "main": "dist/grid.js",
   "config": {
-    "src": "src/WebComponentSkeleton.ts"
+    "src": "src/grid.ts"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/nuclei/web-component-skeleton"
+    "url": "http://github.com/nuclei/grid"
   },
   "bugs": {
-    "url": "http://github.com/nuclei/web-component-skeleton/issues"
+    "url": "http://github.com/nuclei/grid"
   },
   "keywords": [
     "vanilla web components",
-    "web component skeleton"
+    "grid",
+    "grid-layout",
+    "css-grid"
   ],
   "author": "Lukas Oppermann",
   "license": "MIT",
@@ -37,5 +39,6 @@
     "demo": "cp -r node_modules/@webcomponents/webcomponentsjs docs/polyfill",
     "test": "standard src/*.ts --parser typescript-eslint-parser | snazzy && tsc src/*.ts --noEmit --pretty --alwaysStrict --noUnusedLocals --target ES5 --lib es6,dom && standard-readme",
     "travis": "npm run test"
-  }
+  },
+  "dependencies": {}
 }

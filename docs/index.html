@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Web Component Skeleton</title>
+    <script src="./polyfill/webcomponents-lite.js"></script>
+    <script src="../dist/grid.js"></script>
+    <style media="screen">
+      :root{
+        --grid-max-columns: 12;
+        --grid-breakpoint-xs: 0;
+        --grid-breakpoint-s: 600px;
+        --grid-breakpoint-m: 800px;
+        /*--grid-breakpoint-l: 1000px;
+        --grid-breakpoint-xl: 1200px;
+        --grid-breakpoint-xxl: 1400px;*/
+        --grid-rows: repeat(3, 200px);
+        --grid-gutter: 1px;
+        --grid-gutter-s: 20px;
+      }
+      grid-container{
+        background: red;
+        border: 1px solid red;
+      }
+      grid-container div{
+        background: white;
+      }
+      @media (max-width: 600px) {
+        :root{
+          --grid-columns: 3;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <grid-container gutter="20px" rows="2" autoflow>
+      <div column="2 1xs 2s 3m 4l 5xl 6xxl" offset="2 1xs 2s 3m 4l 5xl 6xxl" row="2 1xs 2s 3m 4l 5xl 6xxl">Item 1</div>
+      <div column="4 2s">Item 2</div>
+      <div>Item 3</div>
+      <div column="3 2s">Item 2</div>
+      <div column="4 2s">Item 2</div>
+      <div column="2 2s">Item 2</div>
+      <div column="3 2s">Item 2</div>
+      <div column="3 2s">Item 2</div>
+      <div column="5 2s">Item 2</div>
+      <div>Item 4</div>
+      <div>Item 4</div>
+      <div>Item 4</div>
+    </grid-container>
+  </body>
+</html>

@@ -1,8 +1,8 @@
 // rollup.config.js
-import typescript from 'rollup-plugin-typescript';
-import nodeResolve from 'rollup-plugin-node-resolve';
+import typescript from 'rollup-plugin-typescript'
+import nodeResolve from 'rollup-plugin-node-resolve'
 
-const pkg = require('./package');
+const pkg = require('./package')
 
 export default {
   entry: pkg.config.src,
