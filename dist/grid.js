@@ -36,7 +36,7 @@ class Grid extends HTMLElement {
         let breakpoints = this._getBreakpoints();
         style += this._columnCss(maxColumns);
         Object.keys(breakpoints).forEach((size, index) => {
-            style += `@media (min-width:${breakpoints[size].breakpoint}){
+            style += `@media (min-width:${breakpoints[size]}){
         :host{
           grid-template-columns: repeat(var(--grid-columns-${size}, var(--grid-columns, auto-fill), 1fr);
           grid-template-rows: var(--grid-rows-${size}, var(--grid-rows, none));
@@ -58,21 +58,10 @@ class Grid extends HTMLElement {
     }
     _getBreakpoints() {
         let breakpoints = {};
-        let columns = {
-            'xs': 1,
-            's': 2,
-            'm': 3,
-            'l': 12,
-            'xl': 16,
-            'xxl': 16
-        };
-        Object.keys(columns).forEach(function (size) {
+        new Array('xs', 's', 'm', 'l', 'xl', 'xxl').forEach(function (size) {
             let breakpoint = String(globalStyles.getPropertyValue('--grid-breakpoint-' + size)).trim() || null;
             if (breakpoint !== null) {
-                breakpoints[size] = {
-                    breakpoint: breakpoint,
-                    columns: columns[size]
-                };
+                breakpoints[size] = breakpoint;
             }
         });
         return breakpoints;
