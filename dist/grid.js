@@ -5,9 +5,10 @@ let globalStyles;
 let style = `
 :host{
   display: grid;
-  grid-template-columns: repeat(var(--grid-columns, 12), 1fr);
+  grid-template-columns: repeat(var(--grid-columns, auto-fill), 1fr);
   grid-template-rows: var(--grid-rows, none);
   grid-gap: var(--grid-gutter, 0);
+  grid-row-gap: var(--grid-row-gutter, var(--grid-gutter, 0));
 }
 :host([autoflow]){
   grid-auto-flow: row dense;
@@ -37,8 +38,8 @@ class Grid extends HTMLElement {
         Object.keys(breakpoints).forEach((size, index) => {
             style += `@media (min-width:${breakpoints[size].breakpoint}){
         :host{
-          grid-template-columns: repeat(var(--grid-columns-${size}, ${breakpoints[size].columns}), 1fr);
-          grid-template-rows: var(--grid-rows-${size}, none);
+          grid-template-columns: repeat(var(--grid-columns-${size}, var(--grid-columns, auto-fill), 1fr);
+          grid-template-rows: var(--grid-rows-${size}, var(--grid-rows, none));
           grid-gap: var(--grid-gutter-${size}, var(--grid-gutter, 0));
         }
         ${this._columnCss(maxColumns, size)}
@@ -79,9 +80,10 @@ class Grid extends HTMLElement {
     _columnCss(maxColumns, size = '') {
         let style = ``;
         for (let i = 1; i <= maxColumns; i++) {
-            style += `\t::slotted([column~="${i}${size}"]){ grid-column: span ${i}; }\n`;
-            style += `\t::slotted([row~="${i}${size}"]){ grid-row: span ${i}; }\n`;
-            style += `\t::slotted([offset~="${i}${size}"]){ margin: ${i}fr; }\n`;
+            style += `\t::slotted([column~="${i}${size}"]){ grid-column-end: span ${i}; }\n`;
+            style += `\t::slotted([row~="${i}${size}"]){ grid-row-end: span ${i}; }\n`;
+            style += `\t::slotted([start-column~="${i}${size}"]){ grid-column-start: ${i}; }\n`;
+            style += `\t::slotted([start-row~="${i}${size}"]){ grid-row-start: ${i}; }\n`;
         }
         return style;
     }
@@ -95,25 +97,28 @@ class Grid extends HTMLElement {
         if (this._gutter === gutter)
             return;
         this._gutter = gutter;
+        this.style.setProperty('--grid-gutter', gutter);
         this.setAttribute('gutter', gutter);
     }
     set rowgutter(rowgutter) {
         if (this._rowgutter === rowgutter)
             return;
         this._rowgutter = rowgutter;
+        this.style.setProperty('--grid-row-gutter', rowgutter);
         this.setAttribute('rowgutter', rowgutter);
     }
     set columns(columns) {
         if (this._columns === columns)
             return;
         this._columns = columns;
+        this.style.setProperty('--grid-columns', columns);
         this.setAttribute('columns', columns);
     }
     set rows(rows) {
         if (this._rows === rows)
             return;
         this._rows = rows;
-        console.log(this.style.setProperty('--grid-rows', rows));
+        this.style.setProperty('--grid-rows', `repeat(${rows}, 1fr)`);
         this.setAttribute('rows', rows);
     }
 }

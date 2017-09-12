@@ -8,9 +8,9 @@
     <style media="screen">
       :root{
         --grid-max-columns: 12;
-        --grid-breakpoint-xs: 0;
-        --grid-breakpoint-s: 600px;
-        --grid-breakpoint-m: 800px;
+        /*--grid-breakpoint-xs: 0;*/
+        /*--grid-breakpoint-s: 600px;
+        --grid-breakpoint-m: 800px;*/
         /*--grid-breakpoint-l: 1000px;
         --grid-breakpoint-xl: 1200px;
         --grid-breakpoint-xxl: 1400px;*/
@@ -18,34 +18,35 @@
         --grid-gutter: 1px;
         --grid-gutter-s: 20px;
       }
-      grid-container{
-        background: red;
-        border: 1px solid red;
-      }
-      grid-container div{
-        background: white;
-      }
       @media (max-width: 600px) {
         :root{
           --grid-columns: 3;
         }
       }
+      .mondrian{
+        background: rgb(50,40,30);
+        --grid-rows: repeat(8, 75px);
+        --grid-columns: 7;
+      }
     </style>
   </head>
   <body>
-    <grid-container gutter="20px" rows="2" autoflow>
-      <div column="2 1xs 2s 3m 4l 5xl 6xxl" offset="2 1xs 2s 3m 4l 5xl 6xxl" row="2 1xs 2s 3m 4l 5xl 6xxl">Item 1</div>
-      <div column="4 2s">Item 2</div>
-      <div>Item 3</div>
-      <div column="3 2s">Item 2</div>
-      <div column="4 2s">Item 2</div>
-      <div column="2 2s">Item 2</div>
-      <div column="3 2s">Item 2</div>
-      <div column="3 2s">Item 2</div>
-      <div column="5 2s">Item 2</div>
-      <div>Item 4</div>
-      <div>Item 4</div>
-      <div>Item 4</div>
+    <grid-container class="mondrian" gutter="10px" rowgutter="10px">
+      <div style="background: FloralWhite;" column="2" row="1"></div>
+      <div style="background: FloralWhite;" column="3" row="1"></div>
+      <div style="background: gold;" column="2" row="1"></div>
+      <div style="background: FloralWhite;" column="1" row="2"></div>
+      <div style="background: Tomato;" column="4" row="4"></div>
+      <div style="background: gold;" column="2" row="2"></div>
+      <div style="background: FloralWhite;" column="1" row="3"></div>
+      <div style="background: FloralWhite;" column="1" row="2"></div>
+      <div style="background: FloralWhite;" column="1" row="2"></div>
+      <div style="background: FloralWhite;" start-column="4" column="2" row="1"></div>
+      <div style="background: FloralWhite;" column="2" row="1"></div>
+      <div style="background: gold;" column="1" row="2"></div>
+      <div style="background: FloralWhite;" start-row="8" start-column="2" column="2" row="1"></div>
+      <div style="background: FloralWhite;" start-column="4" column="2" row="1"></div>
+      <div style="background: steelblue;" column="2" row="2"></div>
     </grid-container>
   </body>
 </html>
