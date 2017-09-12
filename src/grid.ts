@@ -53,7 +53,7 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
     Object.keys(breakpoints).forEach((size, index) => {
       style += `@media (min-width:${breakpoints[size]}){
         :host{
-          grid-template-columns: repeat(var(--grid-columns-${size}, var(--grid-columns, auto-fill), 1fr);
+          grid-template-columns: repeat(var(--grid-columns-${size}, var(--grid-columns, auto-fill)), 1fr);
           grid-template-rows: var(--grid-rows-${size}, var(--grid-rows, none));
           grid-gap: var(--grid-gutter-${size}, var(--grid-gutter, 0));
         }

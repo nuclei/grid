@@ -8,15 +8,15 @@
     <style media="screen">
       :root{
         --grid-max-columns: 12;
-        /*--grid-breakpoint-xs: 0;*/
-        /*--grid-breakpoint-s: 600px;
-        --grid-breakpoint-m: 800px;*/
-        /*--grid-breakpoint-l: 1000px;
+        --grid-breakpoint-xs: 0;
+        --grid-breakpoint-s: 600px;
+        --grid-breakpoint-m: 800px;
+        --grid-breakpoint-l: 1000px;
         --grid-breakpoint-xl: 1200px;
-        --grid-breakpoint-xxl: 1400px;*/
-        --grid-rows: repeat(3, 200px);
+        --grid-breakpoint-xxl: 1400px;
+        /*--grid-rows: repeat(3, 200px);
         --grid-gutter: 1px;
-        --grid-gutter-s: 20px;
+        --grid-gutter-s: 20px;*/
       }
       @media (max-width: 600px) {
         :root{
@@ -31,12 +31,12 @@
     </style>
   </head>
   <body>
-    <grid-container class="mondrian" gutter="10px" rowgutter="10px">
+    <grid-container class="mondrian" gutter="10px" rowgutter="10px" columns="7">
       <div style="background: FloralWhite;" column="2" row="1"></div>
       <div style="background: FloralWhite;" column="3" row="1"></div>
       <div style="background: gold;" column="2" row="1"></div>
       <div style="background: FloralWhite;" column="1" row="2"></div>
-      <div style="background: Tomato;" column="4" row="4"></div>
+      <div style="background: Tomato;" column="4 1m" row="4"></div>
       <div style="background: gold;" column="2" row="2"></div>
       <div style="background: FloralWhite;" column="1" row="3"></div>
       <div style="background: FloralWhite;" column="1" row="2"></div>
