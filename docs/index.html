@@ -14,13 +14,13 @@
         --grid-breakpoint-l: 1000px;
         --grid-breakpoint-xl: 1200px;
         --grid-breakpoint-xxl: 1400px;
-        /*--grid-rows: repeat(3, 200px);
-        --grid-gutter: 1px;
-        --grid-gutter-s: 20px;*/
+        /*--grid-rows: repeat(3, 200px);*/
+        --grid-gutter: 10px;
       }
       @media (max-width: 600px) {
         :root{
           --grid-columns: 3;
+          --grid-gutter: 100px;
         }
       }
       .mondrian{
@@ -64,7 +64,7 @@
       <div style="background: FloralWhite;" start-column="5 2m" column="2" row="1"></div>
       <div style="background: steelblue;" column="2" row="1 2m"></div>
     </grid-container>
-    <grid-container class="responsive-columns" gutter="10px" rowgutter="5px" autoflow>
+    <grid-container class="responsive-columns" rowgutter="5px" autoflow>
       <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
       <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
       <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>

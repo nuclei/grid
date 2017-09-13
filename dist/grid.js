@@ -31,20 +31,6 @@ class Grid extends HTMLElement {
             ShadyCSS.prepareTemplate(template, 'grid-container');
             ShadyCSS.styleElement(this);
         }
-        globalStyles = window.getComputedStyle(document.documentElement);
-        let maxColumns = parseInt(String(globalStyles.getPropertyValue('--grid-max-columns')).trim()) || 16;
-        let breakpoints = this._getBreakpoints();
-        style += this._columnCss(maxColumns);
-        Object.keys(breakpoints).forEach((size, index) => {
-            style += `@media (min-width:${breakpoints[size]}){
-        :host{
-          grid-template-columns: repeat(var(--grid-columns-${size}, var(--grid-columns, auto-fill)), 1fr);
-          grid-template-rows: var(--grid-rows-${size}, var(--grid-rows, none));
-          grid-gap: var(--grid-gutter-${size}, var(--grid-gutter, 0));
-        }
-        ${this._columnCss(maxColumns, size)}
-      }\n`;
-        });
         template.innerHTML = `<style>${style}</style>\n<slot></slot>`;
         shadowRoot.appendChild(document.importNode(template.content, true));
     }
@@ -55,6 +41,12 @@ class Grid extends HTMLElement {
         this[attrName] = newVal;
     }
     connectedCallback() {
+        globalStyles = window.getComputedStyle(document.documentElement);
+        let maxColumns = parseInt(String(globalStyles.getPropertyValue('--grid-max-columns')).trim()) || 16;
+        let maxRows = parseInt(String(globalStyles.getPropertyValue('--grid-max-rows')).trim()) || 16;
+        style += this._columnCss(maxColumns, maxRows);
+        style += this._breakPointCss(maxColumns, maxRows);
+        this.shadowRoot.querySelector('style').innerHTML = style;
     }
     _getBreakpoints() {
         let breakpoints = {};
@@ -67,16 +59,32 @@ class Grid extends HTMLElement {
         });
         return breakpoints;
     }
-    _columnCss(maxColumns, size = '') {
+    _columnCss(maxColumns, maxRows, size = '') {
         let style = ``;
         for (let i = 1; i <= maxColumns; i++) {
-            style += `\t::slotted([column~="${i}${size}"]){ grid-column-end: span ${i}; }\n`;
-            style += `\t::slotted([row~="${i}${size}"]){ grid-row-end: span ${i}; }\n`;
-            style += `\t::slotted([start-column~="${i}${size}"]){ grid-column-start: ${i}; }\n`;
-            style += `\t::slotted([start-row~="${i}${size}"]){ grid-row-start: ${i}; }\n`;
+            style += `::slotted([column~="${i}${size}"]){ grid-column-end: span ${i}; }\n`;
+            style += `::slotted([start-column~="${i}${size}"]){ grid-column-start: ${i}; }\n`;
         }
-        style += `\t::slotted([start-column~="auto${size}"]){ grid-column-start: auto; }\n`;
-        style += `\t::slotted([start-row~="auto-${size}"]){ grid-row-start: auto; }\n`;
+        for (let i = 1; i <= maxRows; i++) {
+            style += `::slotted([row~="${i}${size}"]){ grid-row-end: span ${i}; }\n`;
+            style += `::slotted([start-row~="${i}${size}"]){ grid-row-start: ${i}; }\n`;
+        }
+        style += `::slotted([start-column~="0${size}"]){ grid-column-start: auto; }\n`;
+        style += `::slotted([start-row~="0${size}"]){ grid-row-start: auto; }\n`;
+        return style;
+    }
+    _breakPointCss(maxColumns, maxRows) {
+        let style = ``;
+        let breakpoints = this._getBreakpoints();
+        Object.keys(breakpoints).forEach((size, index) => {
+            style += `@media (min-width:${breakpoints[size]}){
+        :host{
+          grid-template-columns: repeat(var(--grid-columns-${size}, var(--grid-columns, auto-fill)), 1fr);
+          grid-template-rows: var(--grid-rows-${size}, var(--grid-rows, none));
+        }
+        ${this._columnCss(maxColumns, maxRows, size)}
+      }\n`;
+        });
         return style;
     }
     set autoflow(autoflow) {

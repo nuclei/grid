@@ -83,8 +83,12 @@ You may specify an integer for the general amount of rows the item should fill a
 You may specify an integer for the general column the item should start on and/or any or all of the breakpoint specific units.
 An item with the attributes `column="2" start-column="3"` would start on the 2nd column and extend for 3 columns so it would span the 2nd, 3rd and 4th column.
 
+A special 0 value e.g. `0xs` is available to reset the offset.
+
 #### start-row
 You may specify an integer for the general row the item should start on and/or any or all of the breakpoint specific units.
+
+A special 0 value e.g. `0xs` is available to reset the offset.
 
 ## CSS Variables
 CSS variables (custom properties) are used to configure the web component. However this means that most variables need to be available when the custom element is initialised.
@@ -93,12 +97,30 @@ CSS variables (custom properties) are used to configure the web component. Howev
 You may defined any or all of the following breakpoints. Note that it is advised to use 0 for your lowest breakpoint. The breakpoints will be used to create media queries with a `min-width` of the breakpoint.
 
 ```css
---grid-breakpoint-xs: 0;
---grid-breakpoint-s: 600px;
---grid-breakpoint-m: 800px;
---grid-breakpoint-l: 1000px;
---grid-breakpoint-xl: 1200px;
---grid-breakpoint-xxl: 1400px;
+:root{
+  --grid-breakpoint-xs: 0;
+  --grid-breakpoint-s: 600px;
+  --grid-breakpoint-m: 800px;
+  --grid-breakpoint-l: 1000px;
+  --grid-breakpoint-xl: 1200px;
+  --grid-breakpoint-xxl: 1400px;
+}
+```
+
+### Gutters
+If you need your gutters to change depending on the breakpoint you can specify the `--grid-gutter` and `--grid-row-gutter` variable within a media query.
+
+```css
+:root{
+  --grid-gutter: 10px;
+  --grid-row-gutter: 10px;
+}
+@media (min-width: 800px){
+  :root{
+    --grid-gutter: 20px;
+    --grid-row-gutter: 10px;
+  }
+}
 ```
 
 ### Max Columns
