@@ -1,5 +1,5 @@
 {
-  "name": "grid",
+  "name": "grid-component",
   "version": "0.0.0",
   "description": "A vanilla js web component grid based on css grid.",
   "main": "dist/grid.js",
@@ -30,8 +30,8 @@
     "snazzy": "^7.0.0",
     "standard": "^10.0.2",
     "standard-readme": "^2.0.2",
-    "typescript": "^2.3.2",
-    "typescript-eslint-parser": "^2.1.0"
+    "typescript": "2.*",
+    "typescript-eslint-parser": "2.*"
   },
   "scripts": {
     "build": "npm test && rollup -c",

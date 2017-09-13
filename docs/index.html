@@ -28,6 +28,22 @@
         --grid-rows: repeat(8, 75px);
         --grid-columns: 7;
       }
+      .responsive-columns{
+        padding: 5px;
+        margin-top: 10px;
+        background: FloralWhite;
+        --grid-rows: repeat(6, 100px);
+        --grid-columns: 6;
+      }
+      .responsive-columns div{
+        color: white;
+        font-family: sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
@@ -35,9 +51,9 @@
       <div style="background: FloralWhite;" column="2" row="1"></div>
       <div style="background: FloralWhite;" column="3" row="1"></div>
       <div style="background: gold;" column="2" row="1"></div>
-      <div style="background: FloralWhite;" column="1" row="2"></div>
-      <div style="background: Tomato;" column="4 1m" row="4"></div>
-      <div style="background: gold;" column="2" row="2"></div>
+      <div style="background: FloralWhite;" column="2 1m" row="2"></div>
+      <div style="background: Tomato;" column="5 4m" row="4"></div>
+      <div style="background: gold;" column="1 2m" row="2"></div>
       <div style="background: FloralWhite;" column="1" row="3"></div>
       <div style="background: FloralWhite;" column="1" row="2"></div>
       <div style="background: FloralWhite;" column="1" row="2"></div>
@@ -45,8 +61,18 @@
       <div style="background: FloralWhite;" column="2" row="1"></div>
       <div style="background: gold;" column="1" row="2"></div>
       <div style="background: FloralWhite;" start-row="8" start-column="2" column="2" row="1"></div>
-      <div style="background: FloralWhite;" start-column="4" column="2" row="1"></div>
-      <div style="background: steelblue;" column="2" row="2"></div>
+      <div style="background: FloralWhite;" start-column="5 2m" column="2" row="1"></div>
+      <div style="background: steelblue;" column="2" row="1 2m"></div>
+    </grid-container>
+    <grid-container class="responsive-columns" gutter="10px" rowgutter="5px" autoflow>
+      <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
+      <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
+      <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
+      <div style="background: navy;" column="3m 6xs">An element on 2 columns</div>
+      <div style="background: navy;" column="3m 6xs">An element on 2 columns</div>
+      <div style="background: navy;" column="3m 6xs">An element on 2 columns</div>
+      <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
+      <div style="background: DarkSlateBlue;" column="1">1 column element</div>
     </grid-container>
   </body>
 </html>

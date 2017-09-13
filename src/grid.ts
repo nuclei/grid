@@ -93,8 +93,9 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
    */
   private _getBreakpoints () {
     let breakpoints = {}
+    let sizes = [ 'xs', 's', 'm', 'l', 'xl', 'xxl' ]
     // get breakpoints from css variables
-    new Array('xs','s','m','l','xl','xxl').forEach(function (size) {
+    sizes.forEach(function (size) {
       let breakpoint = String(globalStyles.getPropertyValue('--grid-breakpoint-' + size)).trim() || null
       if (breakpoint !== null) {
         breakpoints[size] = breakpoint
@@ -115,6 +116,8 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
       style += `\t::slotted([start-column~="${i}${size}"]){ grid-column-start: ${i}; }\n`
       style += `\t::slotted([start-row~="${i}${size}"]){ grid-row-start: ${i}; }\n`
     }
+    style += `\t::slotted([start-column~="auto${size}"]){ grid-column-start: auto; }\n`
+    style += `\t::slotted([start-row~="auto-${size}"]){ grid-row-start: auto; }\n`
     return style
   }
   /**
