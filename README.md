@@ -123,6 +123,9 @@ If you need your gutters to change depending on the breakpoint you can specify t
 }
 ```
 
+### Columns & Rows
+If you don't want to set your rows and columns via the attributes you can use the css variables `--grid-columns` and `--grid-rows`. You can either change them inside your media queries or you can define them for specific sizes, e.g. `--grid-columns-m`.
+
 ### Max Columns
 By default the grid can have a maximum of 16 columns. Should you ever have the need for a grid with more columns, you can simply set the `--grid-max-columns: 24;` css variable.
 

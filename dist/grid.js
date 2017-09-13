@@ -111,14 +111,20 @@ class Grid extends HTMLElement {
         if (this._columns === columns)
             return;
         this._columns = columns;
-        this.style.setProperty('--grid-columns', columns);
+        columns.split(' ').forEach((item) => {
+            let size = item.replace(/[0-9]+/g, '').trim();
+            this.style.setProperty(`--grid-columns${size.length > 0 ? '-' : ''}${size}`, item.replace(/[^0-9]*/g, '').trim());
+        });
         this.setAttribute('columns', columns);
     }
     set rows(rows) {
         if (this._rows === rows)
             return;
         this._rows = rows;
-        this.style.setProperty('--grid-rows', `repeat(${rows}, 1fr)`);
+        rows.split(' ').forEach((item) => {
+            let size = item.replace(/[0-9]+/g, '').trim();
+            this.style.setProperty(`--grid-rows${size.length > 0 ? '-' : ''}${size}`, `repeat(${item.replace(/[^0-9]*/g, '').trim()}, 1fr)`);
+        });
         this.setAttribute('rows', rows);
     }
 }
