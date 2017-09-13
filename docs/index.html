@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Web Component Skeleton</title>
     <script src="./polyfill/webcomponents-lite.js"></script>
-    <script src="../dist/grid.js"></script>
+    <script src="grid.js"></script>
     <style media="screen">
       :root{
         --grid-max-columns: 12;
@@ -47,7 +47,7 @@
     </style>
   </head>
   <body>
-    <grid-container class="mondrian" gutter="10px" rowgutter="10px" columns="10 7s 12m" rows="8 12s 8m">
+    <grid-container class="mondrian" gutter="10px" rowgutter="10px">
       <div style="background: FloralWhite;" column="2" row="1"></div>
       <div style="background: FloralWhite;" column="3" row="1"></div>
       <div style="background: gold;" column="2" row="1"></div>
