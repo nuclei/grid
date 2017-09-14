@@ -1,5 +1,5 @@
 {
-  "name": "nuclei-grid",
+  "name": "@nuclei-components/grid",
   "version": "0.0.2",
   "description": "A vanilla js web component grid based on css grid.",
   "main": "dist/grid.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/nuclei/grid"
+    "url": "git+ssh://git@github.com/nuclei/grid.git"
   },
   "bugs": {
     "url": "http://github.com/nuclei/grid"
@@ -40,5 +40,9 @@
     "test": "standard src/*.ts --parser typescript-eslint-parser | snazzy && tsc src/*.ts --noEmit --pretty --alwaysStrict --noUnusedLocals --target ES5 --lib es6,dom && standard-readme",
     "travis": "npm run test"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "homepage": "https://github.com/nuclei/grid#readme",
+  "directories": {
+    "doc": "docs"
+  }
 }

@@ -2,17 +2,17 @@
 > A vanilla js web component grid based on css grid.
 
 [![Spec Custom Elements V1](https://img.shields.io/badge/spec-custom%20elements%20v1-F52757.svg?style=flat-square)](https://www.w3.org/TR/custom-elements/)
-[![Build Status](https://img.shields.io/travis/nuclei/grid/master.svg?style=flat-square)](https://travis-ci.org/nuclei/grid) [![npm](https://img.shields.io/npm/v/nuclei-grid.svg?style=flat-square)](https://www.npmjs.com/package/nuclei-grid)
-[![Known Vulnerabilities](https://snyk.io/test/github/nuclei/grid/badge.svg?style=flat-square)](https://snyk.io/test/github/nuclei/grid) [![npm](https://img.shields.io/npm/dt/nuclei-grid.svg?style=flat-square)](https://www.npmjs.com/package/nuclei-grid) [![license](https://img.shields.io/github/license/nuclei/grid.svg?style=flat-square)](https://github.com/nuclei/grid/blob/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/nuclei/grid/master.svg?style=flat-square)](https://travis-ci.org/nuclei/grid) [![npm](https://img.shields.io/npm/v/@nuclei-components/grid.svg?style=flat-square)](https://www.npmjs.com/package/@nuclei-components/grid)
+[![Known Vulnerabilities](https://snyk.io/test/github/nuclei/grid/badge.svg?style=flat-square)](https://snyk.io/test/github/nuclei/grid) [![npm](https://img.shields.io/npm/dt/@nuclei-components/grid.svg?style=flat-square)](https://www.npmjs.com/package/@nuclei-components/grid) [![license](https://img.shields.io/github/license/nuclei/grid.svg?style=flat-square)](https://github.com/nuclei/grid/blob/master/LICENSE)
 
 ## Demo
 [Grid](https://grid.github.io/grid/index.html)
 
 ## Installation
-Make sure to use the correct package name: `nuclei-grid`.
+Make sure to use the correct package name: `@nuclei-components/grid`.
 
 ```bash
-npm install --save nuclei-grid
+npm install --save @nuclei-components/grid
 ```
 
 As the support for web components is currently still pretty spotty, you probably want to load a polyfill before loading the web component.
