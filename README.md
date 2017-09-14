@@ -9,8 +9,6 @@
 [Grid](https://grid.github.io/grid/index.html)
 
 ## Installation
-Make sure to use the correct package name: `@nuclei-components/grid`.
-
 ```bash
 npm install --save @nuclei-components/grid
 ```
