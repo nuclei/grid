@@ -3,6 +3,7 @@
 
 declare const ShadyCSS // eslint-disable-line no-unused-vars
 let globalStyles
+let shadowRoot
 let style = `
 :host{
   display: grid;
@@ -34,17 +35,7 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
     // This is specific to CE and required by the spec.
     super()
     // create shadowRoot
-    let shadowRoot = this.attachShadow({mode: 'open'})
-    // check if polyfill is used
-    if (typeof ShadyCSS !== 'undefined') {
-      ShadyCSS.prepareTemplate(template, 'grid-container') // eslint-disable-line no-undef
-      // apply css polyfill
-      ShadyCSS.styleElement(this) // eslint-disable-line no-undef
-    }
-    // attach to template
-    template.innerHTML = `<style>${style}</style>\n<slot></slot>`
-    // add content to shadowRoot
-    shadowRoot.appendChild(document.importNode(template.content, true))
+    shadowRoot = this.attachShadow({mode: 'open'})
   }
   /**
   * @method observedAttributes
@@ -74,7 +65,16 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
     style += this._columnCss(maxColumns, maxRows)
     // add breakpoints
     style += this._breakPointCss(maxColumns, maxRows)
-    this.shadowRoot.querySelector('style').innerHTML = style
+    // attach to template
+    template.innerHTML = `<style>${style}</style>\n<slot></slot>`
+    // check if polyfill is used
+    if (typeof ShadyCSS !== 'undefined') {
+      ShadyCSS.prepareTemplate(template, 'grid-container') // eslint-disable-line no-undef
+      // apply css polyfill
+      ShadyCSS.styleElement(this) // eslint-disable-line no-undef
+    }
+    // add content to shadowRoot
+    shadowRoot.appendChild(document.importNode(template.content, true))
   }
   /**
   * @method _getBreakpoints

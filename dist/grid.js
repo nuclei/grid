@@ -2,6 +2,7 @@
 'use strict';
 
 let globalStyles;
+let shadowRoot;
 let style = `
 :host{
   display: grid;
@@ -26,13 +27,7 @@ class Grid extends HTMLElement {
         this._gutter = null;
         this._rowgutter = null;
         this._autoflow = null;
-        let shadowRoot = this.attachShadow({ mode: 'open' });
-        if (typeof ShadyCSS !== 'undefined') {
-            ShadyCSS.prepareTemplate(template, 'grid-container');
-            ShadyCSS.styleElement(this);
-        }
-        template.innerHTML = `<style>${style}</style>\n<slot></slot>`;
-        shadowRoot.appendChild(document.importNode(template.content, true));
+        shadowRoot = this.attachShadow({ mode: 'open' });
     }
     static get observedAttributes() {
         return ['gutter', 'rowgutter', 'autoflow', 'rows', 'columns'];
@@ -46,7 +41,12 @@ class Grid extends HTMLElement {
         let maxRows = parseInt(String(globalStyles.getPropertyValue('--grid-max-rows')).trim()) || 16;
         style += this._columnCss(maxColumns, maxRows);
         style += this._breakPointCss(maxColumns, maxRows);
-        this.shadowRoot.querySelector('style').innerHTML = style;
+        template.innerHTML = `<style>${style}</style>\n<slot></slot>`;
+        if (typeof ShadyCSS !== 'undefined') {
+            ShadyCSS.prepareTemplate(template, 'grid-container');
+            ShadyCSS.styleElement(this);
+        }
+        shadowRoot.appendChild(document.importNode(template.content, true));
     }
     _getBreakpoints() {
         let breakpoints = {};
