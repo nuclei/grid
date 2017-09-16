@@ -4,6 +4,9 @@
 declare const ShadyCSS // eslint-disable-line no-unused-vars
 let globalStyles
 let shadowRoot
+// setup variables
+let maxColumns = 24
+let maxRows = 24
 let style = `
 :host{
   display: grid;
@@ -58,13 +61,10 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
    */
   connectedCallback () {
     globalStyles = window.getComputedStyle(document.documentElement)
-    // get max columns from css variable
-    let maxColumns = parseInt(String(globalStyles.getPropertyValue('--grid-max-columns')).trim()) || 16
-    let maxRows = parseInt(String(globalStyles.getPropertyValue('--grid-max-rows')).trim()) || 16
     // add columns for no media query
-    style += this._columnCss(maxColumns, maxRows)
+    style += this._columnCss()
     // add breakpoints
-    style += this._breakPointCss(maxColumns, maxRows)
+    style += this._breakPointCss()
     // attach to template
     template.innerHTML = `<style>${style}</style>\n<slot></slot>`
     // check if polyfill is used
@@ -96,7 +96,7 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   * @method _columnCss
   * @description return columns css
    */
-  private _columnCss (maxColumns: number, maxRows: number, size: string = '') {
+  private _columnCss (size: string = '') {
     let style = ``
     // loop through columns
     for (let i = 1; i <= maxColumns; i++) {
@@ -117,7 +117,7 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   * @method _breakPointCss
   * @description return break point css
    */
-  private _breakPointCss (maxColumns, maxRows) {
+  private _breakPointCss () {
     let style = ``
     // get breakpoints from css variables
     let breakpoints = this._getBreakpoints()
@@ -128,7 +128,7 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
           grid-template-columns: repeat(var(--grid-columns-${size}, var(--grid-columns, auto-fill)), 1fr);
           grid-template-rows: var(--grid-rows-${size}, var(--grid-rows, none));
         }
-        ${this._columnCss(maxColumns, maxRows, size)}
+        ${this._columnCss(size)}
       }\n`
     })
     // return breakpoints

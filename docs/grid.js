@@ -3,6 +3,8 @@
 
 let globalStyles;
 let shadowRoot;
+let maxColumns = 24;
+let maxRows = 24;
 let style = `
 :host{
   display: grid;
@@ -37,10 +39,8 @@ class Grid extends HTMLElement {
     }
     connectedCallback() {
         globalStyles = window.getComputedStyle(document.documentElement);
-        let maxColumns = parseInt(String(globalStyles.getPropertyValue('--grid-max-columns')).trim()) || 16;
-        let maxRows = parseInt(String(globalStyles.getPropertyValue('--grid-max-rows')).trim()) || 16;
-        style += this._columnCss(maxColumns, maxRows);
-        style += this._breakPointCss(maxColumns, maxRows);
+        style += this._columnCss();
+        style += this._breakPointCss();
         template.innerHTML = `<style>${style}</style>\n<slot></slot>`;
         if (typeof ShadyCSS !== 'undefined') {
             ShadyCSS.prepareTemplate(template, 'grid-container');
@@ -59,7 +59,7 @@ class Grid extends HTMLElement {
         });
         return breakpoints;
     }
-    _columnCss(maxColumns, maxRows, size = '') {
+    _columnCss(size = '') {
         let style = ``;
         for (let i = 1; i <= maxColumns; i++) {
             style += `::slotted([column~="${i}${size}"]){ grid-column-end: span ${i}; }\n`;
@@ -73,7 +73,7 @@ class Grid extends HTMLElement {
         style += `::slotted([start-row~="0${size}"]){ grid-row-start: auto; }\n`;
         return style;
     }
-    _breakPointCss(maxColumns, maxRows) {
+    _breakPointCss() {
         let style = ``;
         let breakpoints = this._getBreakpoints();
         Object.keys(breakpoints).forEach((size, index) => {
@@ -82,7 +82,7 @@ class Grid extends HTMLElement {
           grid-template-columns: repeat(var(--grid-columns-${size}, var(--grid-columns, auto-fill)), 1fr);
           grid-template-rows: var(--grid-rows-${size}, var(--grid-rows, none));
         }
-        ${this._columnCss(maxColumns, maxRows, size)}
+        ${this._columnCss(size)}
       }\n`;
         });
         return style;

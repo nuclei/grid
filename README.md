@@ -124,19 +124,18 @@ If you need your gutters to change depending on the breakpoint you can specify t
 ### Columns & Rows
 If you don't want to set your rows and columns via the attributes you can use the css variables `--grid-columns` and `--grid-rows`. You can either change them inside your media queries or you can define them for specific sizes, e.g. `--grid-columns-m`.
 
-### Max Columns
-By default the grid can have a maximum of 16 columns. Should you ever have the need for a grid with more columns, you can simply set the `--grid-max-columns: 24;` css variable.
+## Limitations
+### Max Columns & Rows
+The grid can be set to any number of columns & rows, however the `column`, `row` and `start-column`, `start-row` attributes on the grids children will only work up to `24`. Should you have a grid with e.g. 30 rows and want to have an element start on row 26, you would need to add custom css `grid-row-start: 26` targeting this element.
 
-If you are using grids with 16 or less columns you do not need to change anything. Note that the grid will work fine, even when it has more than the defined max-columns columns, however when a cell has a `column` or `start-column` attribute specifying a value outside of the max-columns range it will not work.
-
-### Tests
+## Tests
 By default `npm test` assures you stick to the `standardjs` rules, catches typescript errors and validates your readme using `standard-readme`.
 
 ```
 $ npm test
 ```
 
-### Build
+## Build
 Run `npm run build` to convert your source file defined in the `package.json` as `package.config.src` into a compiled js file defined by `package.main`.
 
 ```
