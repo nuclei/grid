@@ -50,11 +50,6 @@ The `gutter` attribute defines the gutter or gap between the columns and rows of
 #### rowgutter
 The `rowgutter` attribute defines the gutter or gap between the rows of the grid. They are useful when you want to have different values for the row and column gutter and can be set to any valid `length` or `percentage` value, see [grid-row-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap).
 
-#### columns
-> coming soon
-#### rows
-> coming soon
-
 #### autoflow
 If present, the `autoflow` attribute sets the grid into [`row dense`](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow) mode which means that the grid tries to fill holes in the grid with items that come later in the order, effectively changing the *visual* order of items.
 
@@ -88,22 +83,36 @@ You may specify an integer for the general row the item should start on and/or a
 
 A special 0 value e.g. `0xs` is available to reset the offset.
 
-## CSS Variables
-CSS variables (custom properties) are used to configure the web component. However this means that most variables need to be available when the custom element is initialised.
+## Element Queries / Breakpoints
+You may defined any or all of the following breakpoints: `xs`, `s`, `m`, `l`, `xl`, `xxl`. Note that it is advised to use 0 for your lowest breakpoint. The breakpoints are used to create **element queries** meaning that a breakpoint will be activated once the `<grid-container>` (*not the page!*) reaches the specified width. Only the biggest breakpoint will be used.
 
-### Breakpoints
-You may defined any or all of the following breakpoints. Note that it is advised to use 0 for your lowest breakpoint. The breakpoints will be used to create media queries with a `min-width` of the breakpoint.
+Breakpoints can be defined per `<grid-container>` using the `breakpoints` attribute. You must provide a space separated list of integers with the size attached, e.g. `600m` for a medium `m` breakpoint that is activated when the element is reaches a `600px` width.
+
+```html
+<grid-container breakpoints="0s 600m 1000l">
+  // ...
+</grid-container>
+```
+
+Alternatively you can define common breakpoints for all grids by defining the `breakpoints` property in the `window.nucleiGrid` object. Breakpoints specified via the `breakpoints` attribute always overwrite global breakpoints.
 
 ```css
-:root{
-  --grid-breakpoint-xs: 0;
-  --grid-breakpoint-s: 600px;
-  --grid-breakpoint-m: 800px;
-  --grid-breakpoint-l: 1000px;
-  --grid-breakpoint-xl: 1200px;
-  --grid-breakpoint-xxl: 1400px;
-}
+<script type="text/javascript">
+  window.nucleiGrid = {
+    breakpoints: {
+      xs: 0,
+      s: 60,
+      m: 800,
+      l: 1000,
+      xl: 1200,
+      xxl: 1500
+    }
+  }
+</script>
 ```
+
+## CSS Variables
+CSS variables (custom properties) are used to configure the web component. However this means that most variables need to be available when the custom element is initialised.
 
 ### Gutters
 If you need your gutters to change depending on the breakpoint you can specify the `--grid-gutter` and `--grid-row-gutter` variable within a media query.

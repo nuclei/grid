@@ -1,8 +1,16 @@
-/* global HTMLElement */
+/* global HTMLElement Window */
 'use strict'
 
 import { style } from './style'
+
+interface Window {
+  nucleiGrid: any // eslint-disable-line no-undef
+  addEventListener: any // eslint-disable-line no-undef
+  customElements: any // eslint-disable-line no-undef
+}
+
 declare const ShadyCSS // eslint-disable-line no-unused-vars
+declare var window: Window
 
 let shadowRoot
 let template = document.createElement('template')
@@ -16,12 +24,12 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   private _rowgutter: string = null // eslint-disable-line no-undef
   private _autoflow: string = null // eslint-disable-line no-undef
   private _breakpoints: object = null // eslint-disable-line no-undef
+  private _breakpointsString: string = null // eslint-disable-line no-undef
 
   constructor () {
     // If you define a constructor, always call super() first!
     // This is specific to CE and required by the spec.
     super()
-    this._breakpoints = window._nuclei_grid.breakpoints || {}
     // create shadowRoot
     shadowRoot = this.attachShadow({mode: 'open'})
     // check if polyfill is used
@@ -38,7 +46,7 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   * @description return attributes that should be watched for updates
    */
   static get observedAttributes () {
-    return ['gutter', 'rowgutter', 'autoflow', 'rows', 'columns']
+    return ['gutter', 'rowgutter', 'autoflow', 'rows', 'columns', 'breakpoints']
   }
   /**
    * @method observedAttributes
@@ -53,98 +61,76 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   * @description When element is added to DOM
    */
   connectedCallback () {
-    if (window._nuclei_grid.eventListeners === undefined || window._nuclei_grid.eventListeners.length <= 0) {
+    // attach event handler if not present
+    if (window.nucleiGrid === undefined || window.nucleiGrid.elements === undefined || window.nucleiGrid.elements.length <= 0) {
       window.addEventListener('resize', this._resizeEvent)
-      window._nuclei_grid.eventListeners = []
+      window.nucleiGrid = window.nucleiGrid || {}
+      window.nucleiGrid.elements = []
     }
-    window._nuclei_grid.eventListeners.push(this)
-    this._resizeEvent()
+    // add element to list for resize event
+    window.nucleiGrid.elements.push(this)
+    // run element query for initial size
+    this._elementQuery(this)
   }
   /**
    * @method _resizeEvent
    * @description resize event function
    */
-  private _resizeEvent() {
-    window._nuclei_grid.eventListeners.forEach((item, index) => {
-      // if item not in deom remove from array and return
-      if (!document.body.contains(item)) return window._nuclei_grid.eventListeners.splice(index, 1)
-      //
-      let prev = null
-      for (let breakpoint in item._breakpoints) {
-        if (item.clientWidth > item._breakpoints[breakpoint]) {
-          prev = {
-            size: item._breakpoints[breakpoint],
-            breakpoint: breakpoint
-          }
-        } else {
-          item.setAttribute('size',prev.breakpoint)
-          break
+  private _resizeEvent () {
+    window.nucleiGrid.elements.forEach((element, index) => {
+      // if element not in DOM remove from array and return
+      if (!document.body.contains(element)) return window.nucleiGrid.elements.splice(index, 1)
+      // call elementQuery if element is in dom
+      element._elementQuery(element)
+    })
+  }
+  /**
+   * @method _elementQuery
+   * @description check the size of the element and react if nessesary
+   */
+  private _elementQuery (element) {
+    // state variable
+    let prev = null
+    // get last item
+    let last = Object.keys(element.breakpoints)[Object.keys(element.breakpoints).length - 1]
+    // loop through breakpoints^
+    for (let breakpoint in element.breakpoints) {
+      if (element.clientWidth > element.breakpoints[breakpoint]) {
+        // keep track of previous item in case next one is to big
+        prev = {
+          size: element.breakpoints[breakpoint],
+          breakpoint: breakpoint
         }
       }
-      console.log(item.clientWidth)
-    })
-  }
-  /**
-  * @method _getBreakpoints
-  * @description get breakpoints from parent css variables
-   */
-  private _getBreakpoints () {
-    let breakpoints = {}
-    let sizes = [ 'xs', 's', 'm', 'l', 'xl', 'xxl' ]
-    // get breakpoints from css variables
-    sizes.forEach(function (size) {
-      let breakpoint = String(globalStyles.getPropertyValue('--grid-breakpoint-' + size)).trim() || null
-      if (breakpoint !== null) {
-        breakpoints[size] = breakpoint
+      // if next element is to big or it is the last element: activate
+      if (element.clientWidth < element.breakpoints[breakpoint] || last === breakpoint) {
+        element.setAttribute('size', prev.breakpoint)
+        break
       }
-    })
-    return breakpoints
+    }
   }
   /**
-  * @method _columnCss
-  * @description return columns css
+   * @method setter breakpoints
+   * @description set breakpoints
    */
-  private _columnCss (size: string = '') {
-    let maxColumns = 24
-    let maxRows = 24
-    let cssStyle = ``
-    // loop through columns
-    cssStyle += `::slotted([start-column~="0${size}"]){ grid-column-start: auto; }\n`
-    for (let i = 1; i <= maxColumns; i++) {
-      // cssStyle += `::slotted([column~="${i}${size}"]){ grid-column-end: span ${i}; }\n`
-      cssStyle += `::slotted([start-column~="${i}${size}"]){ grid-column-start: ${i}; }\n`
-    }
-    // loop through rows
-    cssStyle += `::slotted([start-row~="0${size}"]){ grid-row-start: auto; }\n`
-    for (let i = 1; i <= maxRows; i++) {
-      // cssStyle += `::slotted([row~="${i}${size}"]){ grid-row-end: span ${i}; }\n`
-      cssStyle += `::slotted([start-row~="${i}${size}"]){ grid-row-start: ${i}; }\n`
-    }
-    // reset start values
-    // cssStyle += `::slotted([start-column~="0${size}"]){ grid-column-start: auto; }\n`
-    // cssStyle += `::slotted([start-row~="0${size}"]){ grid-row-start: auto; }\n`
-    console.log(cssStyle)
+  set breakpoints (breakpoints: string) {
+    if (this._breakpointsString === breakpoints) return
+    this._breakpointsString = breakpoints
+    // create breakpoint object
+    this._breakpoints = {}
+    breakpoints.split(' ').forEach((item) => {
+      let size = item.replace(/[0-9]+/g, '').trim()
+      this._breakpoints[size] = item.replace(/[^0-9]*/g, '').trim()
+    })
+
+    this.setAttribute('breakpoints', breakpoints)
   }
   /**
-  * @method _breakPointCss
-  * @description return break point css
+   * @method getter breakpoints
+   * @description get breakpoints
    */
-  private _breakPointCss () {
-    let style = ``
-    // get breakpoints from css variables
-    let breakpoints = this._getBreakpoints()
-    // add breakpoint css
-    Object.keys(breakpoints).forEach((size, index) => {
-      style += `@media (min-width:${breakpoints[size]}){
-        :host{
-          grid-template-columns: repeat(var(--grid-columns-${size}, var(--grid-columns, auto-fill)), 1fr);
-          grid-template-rows: var(--grid-rows-${size}, var(--grid-rows, none));
-        }
-        ${this._columnCss(size)}
-      }\n`
-    })
-    // return breakpoints
-    return style
+  get breakpoints () {
+    return this._breakpoints || window.nucleiGrid.breakpoints || {}
   }
   /**
   * @method setter autoflow

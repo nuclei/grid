@@ -119,6 +119,7 @@ let style = `
 ::slotted([start-row~="24"]){ grid-row-start: 24; }
 </style>`;
 
+'use strict';
 let shadowRoot;
 let template = document.createElement('template');
 template.innerHTML = `${style}\n<slot></slot>`;
@@ -131,7 +132,7 @@ class Grid extends HTMLElement {
         this._rowgutter = null;
         this._autoflow = null;
         this._breakpoints = null;
-        this._breakpoints = window._nuclei_grid.breakpoints || {};
+        this._breakpointsString = null;
         shadowRoot = this.attachShadow({ mode: 'open' });
         if (typeof ShadyCSS !== 'undefined') {
             ShadyCSS.prepareTemplate(template, 'grid-container');
@@ -140,77 +141,57 @@ class Grid extends HTMLElement {
         shadowRoot.appendChild(document.importNode(template.content, true));
     }
     static get observedAttributes() {
-        return ['gutter', 'rowgutter', 'autoflow', 'rows', 'columns'];
+        return ['gutter', 'rowgutter', 'autoflow', 'rows', 'columns', 'breakpoints'];
     }
     attributeChangedCallback(attrName, oldVal, newVal) {
         this[attrName] = newVal;
     }
     connectedCallback() {
-        if (window._nuclei_grid.eventListeners === undefined || window._nuclei_grid.eventListeners.length <= 0) {
+        if (window.nucleiGrid === undefined || window.nucleiGrid.elements === undefined || window.nucleiGrid.elements.length <= 0) {
             window.addEventListener('resize', this._resizeEvent);
-            window._nuclei_grid.eventListeners = [];
+            window.nucleiGrid = window.nucleiGrid || {};
+            window.nucleiGrid.elements = [];
         }
-        window._nuclei_grid.eventListeners.push(this);
-        this._resizeEvent();
+        window.nucleiGrid.elements.push(this);
+        this._elementQuery(this);
     }
     _resizeEvent() {
-        window._nuclei_grid.eventListeners.forEach((item, index) => {
-            if (!document.body.contains(item))
-                return window._nuclei_grid.eventListeners.splice(index, 1);
-            let prev = null;
-            for (let breakpoint in item._breakpoints) {
-                if (item.clientWidth > item._breakpoints[breakpoint]) {
-                    prev = {
-                        size: item._breakpoints[breakpoint],
-                        breakpoint: breakpoint
-                    };
-                }
-                else {
-                    item.setAttribute('size', prev.breakpoint);
-                    break;
-                }
+        window.nucleiGrid.elements.forEach((element, index) => {
+            if (!document.body.contains(element))
+                return window.nucleiGrid.elements.splice(index, 1);
+            element._elementQuery(element);
+        });
+    }
+    _elementQuery(element) {
+        let prev = null;
+        let last = Object.keys(element.breakpoints)[Object.keys(element.breakpoints).length - 1];
+        for (let breakpoint in element.breakpoints) {
+            if (element.clientWidth > element.breakpoints[breakpoint]) {
+                prev = {
+                    size: element.breakpoints[breakpoint],
+                    breakpoint: breakpoint
+                };
             }
-            console.log(item.clientWidth);
-        });
-    }
-    _getBreakpoints() {
-        let breakpoints = {};
-        let sizes = ['xs', 's', 'm', 'l', 'xl', 'xxl'];
-        sizes.forEach(function (size) {
-            let breakpoint = String(globalStyles.getPropertyValue('--grid-breakpoint-' + size)).trim() || null;
-            if (breakpoint !== null) {
-                breakpoints[size] = breakpoint;
+            if (element.clientWidth < element.breakpoints[breakpoint] || last === breakpoint) {
+                element.setAttribute('size', prev.breakpoint);
+                break;
             }
-        });
-        return breakpoints;
+        }
+        console.log(element.clientWidth);
     }
-    _columnCss(size = '') {
-        let maxColumns = 24;
-        let maxRows = 24;
-        let cssStyle = ``;
-        cssStyle += `::slotted([start-column~="0${size}"]){ grid-column-start: auto; }\n`;
-        for (let i = 1; i <= maxColumns; i++) {
-            cssStyle += `::slotted([start-column~="${i}${size}"]){ grid-column-start: ${i}; }\n`;
-        }
-        cssStyle += `::slotted([start-row~="0${size}"]){ grid-row-start: auto; }\n`;
-        for (let i = 1; i <= maxRows; i++) {
-            cssStyle += `::slotted([start-row~="${i}${size}"]){ grid-row-start: ${i}; }\n`;
-        }
-        console.log(cssStyle);
-    }
-    _breakPointCss() {
-        let style$$1 = ``;
-        let breakpoints = this._getBreakpoints();
-        Object.keys(breakpoints).forEach((size, index) => {
-            style$$1 += `@media (min-width:${breakpoints[size]}){
-        :host{
-          grid-template-columns: repeat(var(--grid-columns-${size}, var(--grid-columns, auto-fill)), 1fr);
-          grid-template-rows: var(--grid-rows-${size}, var(--grid-rows, none));
-        }
-        ${this._columnCss(size)}
-      }\n`;
+    set breakpoints(breakpoints) {
+        if (this._breakpointsString === breakpoints)
+            return;
+        this._breakpointsString = breakpoints;
+        this._breakpoints = {};
+        breakpoints.split(' ').forEach((item) => {
+            let size = item.replace(/[0-9]+/g, '').trim();
+            this._breakpoints[size] = item.replace(/[^0-9]*/g, '').trim();
         });
-        return style$$1;
+        this.setAttribute('breakpoints', breakpoints);
+    }
+    get breakpoints() {
+        return this._breakpoints || window.nucleiGrid.breakpoints || {};
     }
     set autoflow(autoflow) {
         if (this._autoflow === autoflow)
