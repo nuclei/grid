@@ -4,10 +4,18 @@
     <meta charset="utf-8">
     <title>CSS Grid Web Component</title>
     <script src="./polyfill/webcomponents-lite.js"></script>
+    <script type="text/javascript">
+      window._nuclei_grid = {
+        breakpoints: {
+          s: 0,
+          m: 600,
+          l: 1000
+        }
+      }
+    </script>
     <script src="grid.js"></script>
     <style media="screen">
       :root{
-        --grid-max-columns: 12;
         --grid-breakpoint-xs: 0;
         --grid-breakpoint-s: 600px;
         --grid-breakpoint-m: 800px;
@@ -47,8 +55,8 @@
     </style>
   </head>
   <body>
-    <grid-container class="mondrian" gutter="10px" rowgutter="10px">
-      <div style="background: FloralWhite;" column="2" row="1"></div>
+    <grid-container class="mondrian" gutter="10px" rowgutter="10px" breakpoints="0s 600m">
+      <div style="background: FloralWhite;" column="2 12s" row="1"></div>
       <div style="background: FloralWhite;" column="3" row="1"></div>
       <div style="background: gold;" column="2" row="1"></div>
       <div style="background: FloralWhite;" column="2 1m" row="2"></div>
@@ -74,5 +82,30 @@
       <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
       <div style="background: DarkSlateBlue;" column="1">1 column element</div>
     </grid-container>
+    <script type="text/javascript">
+    let testing = (tries = 10, iterations = 10) => {
+      let testDiv = document.createElement('div')
+      document.body.appendChild(testDiv)
+      var result = 0
+      for (var b = 0; b < tries; b++ ) {
+        var wc = []
+        var start = window.performance.now()
+        for (var i = 0; i < iterations; i++ ) {
+          wc[i] = document.createElement('grid-container')
+          testDiv.appendChild(wc[i])
+        }
+        var end = window.performance.now()
+        var thisResult = end - start
+        result += thisResult
+        // for (var i = 0; i < iterations; i++ ) {
+        //   wc[i].parentNode.removeChild(wc[i])
+        // }
+        console.log(`Try ${b+1} with ${iterations} iterations took ${(thisResult/1000).toFixed(2)}s`);
+      }
+      result = result/tries
+      // testDiv.parentNode.removeChild(testDiv);
+      console.log(`Avg. of ${tries} tries with ${iterations} iterations took ${(result/1000).toFixed(2)}s (${result}ms)`)
+    }
+    </script>
   </body>
 </html>

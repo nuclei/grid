@@ -1,29 +1,12 @@
 /* global HTMLElement */
 'use strict'
 
+import { style } from './style'
 declare const ShadyCSS // eslint-disable-line no-unused-vars
-let globalStyles
-let shadowRoot
-// setup variables
-let maxColumns = 24
-let maxRows = 24
-let style = `
-:host{
-  display: grid;
-  grid-template-columns: repeat(var(--grid-columns, auto-fill), 1fr);
-  grid-template-rows: var(--grid-rows, none);
-  grid-gap: var(--grid-gutter, 0);
-  grid-row-gap: var(--grid-row-gutter, var(--grid-gutter, 0));
-}
-:host([autoflow]){
-  grid-auto-flow: row dense;
-}
-:host([autoflow=column]){
-  grid-auto-flow: column dense;
-}
-\n`
 
+let shadowRoot
 let template = document.createElement('template')
+template.innerHTML = `${style}\n<slot></slot>`
 
 class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   /* Typescript: declare variables */
@@ -32,13 +15,23 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   private _gutter: string = null // eslint-disable-line no-undef
   private _rowgutter: string = null // eslint-disable-line no-undef
   private _autoflow: string = null // eslint-disable-line no-undef
+  private _breakpoints: object = null // eslint-disable-line no-undef
 
   constructor () {
     // If you define a constructor, always call super() first!
     // This is specific to CE and required by the spec.
     super()
+    this._breakpoints = window._nuclei_grid.breakpoints || {}
     // create shadowRoot
     shadowRoot = this.attachShadow({mode: 'open'})
+    // check if polyfill is used
+    if (typeof ShadyCSS !== 'undefined') {
+      ShadyCSS.prepareTemplate(template, 'grid-container') // eslint-disable-line no-undef
+      // apply css polyfill
+      ShadyCSS.styleElement(this) // eslint-disable-line no-undef
+    }
+    // add content to shadowRoot
+    shadowRoot.appendChild(document.importNode(template.content, true))
   }
   /**
   * @method observedAttributes
@@ -48,8 +41,8 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
     return ['gutter', 'rowgutter', 'autoflow', 'rows', 'columns']
   }
   /**
-  * @method observedAttributes
-  * @description return attributes that should be watched for updates
+   * @method observedAttributes
+   * @description return attributes that should be watched for updates
    */
   attributeChangedCallback (attrName: string, oldVal, newVal) {
     this[attrName] = newVal
@@ -60,21 +53,36 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   * @description When element is added to DOM
    */
   connectedCallback () {
-    globalStyles = window.getComputedStyle(document.documentElement)
-    // add columns for no media query
-    style += this._columnCss()
-    // add breakpoints
-    style += this._breakPointCss()
-    // attach to template
-    template.innerHTML = `<style>${style}</style>\n<slot></slot>`
-    // check if polyfill is used
-    if (typeof ShadyCSS !== 'undefined') {
-      ShadyCSS.prepareTemplate(template, 'grid-container') // eslint-disable-line no-undef
-      // apply css polyfill
-      ShadyCSS.styleElement(this) // eslint-disable-line no-undef
+    if (window._nuclei_grid.eventListeners === undefined || window._nuclei_grid.eventListeners.length <= 0) {
+      window.addEventListener('resize', this._resizeEvent)
+      window._nuclei_grid.eventListeners = []
     }
-    // add content to shadowRoot
-    shadowRoot.appendChild(document.importNode(template.content, true))
+    window._nuclei_grid.eventListeners.push(this)
+    this._resizeEvent()
+  }
+  /**
+   * @method _resizeEvent
+   * @description resize event function
+   */
+  private _resizeEvent() {
+    window._nuclei_grid.eventListeners.forEach((item, index) => {
+      // if item not in deom remove from array and return
+      if (!document.body.contains(item)) return window._nuclei_grid.eventListeners.splice(index, 1)
+      //
+      let prev = null
+      for (let breakpoint in item._breakpoints) {
+        if (item.clientWidth > item._breakpoints[breakpoint]) {
+          prev = {
+            size: item._breakpoints[breakpoint],
+            breakpoint: breakpoint
+          }
+        } else {
+          item.setAttribute('size',prev.breakpoint)
+          break
+        }
+      }
+      console.log(item.clientWidth)
+    })
   }
   /**
   * @method _getBreakpoints
@@ -97,21 +105,25 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   * @description return columns css
    */
   private _columnCss (size: string = '') {
-    let style = ``
+    let maxColumns = 24
+    let maxRows = 24
+    let cssStyle = ``
     // loop through columns
+    cssStyle += `::slotted([start-column~="0${size}"]){ grid-column-start: auto; }\n`
     for (let i = 1; i <= maxColumns; i++) {
-      style += `::slotted([column~="${i}${size}"]){ grid-column-end: span ${i}; }\n`
-      style += `::slotted([start-column~="${i}${size}"]){ grid-column-start: ${i}; }\n`
+      // cssStyle += `::slotted([column~="${i}${size}"]){ grid-column-end: span ${i}; }\n`
+      cssStyle += `::slotted([start-column~="${i}${size}"]){ grid-column-start: ${i}; }\n`
     }
     // loop through rows
+    cssStyle += `::slotted([start-row~="0${size}"]){ grid-row-start: auto; }\n`
     for (let i = 1; i <= maxRows; i++) {
-      style += `::slotted([row~="${i}${size}"]){ grid-row-end: span ${i}; }\n`
-      style += `::slotted([start-row~="${i}${size}"]){ grid-row-start: ${i}; }\n`
+      // cssStyle += `::slotted([row~="${i}${size}"]){ grid-row-end: span ${i}; }\n`
+      cssStyle += `::slotted([start-row~="${i}${size}"]){ grid-row-start: ${i}; }\n`
     }
     // reset start values
-    style += `::slotted([start-column~="0${size}"]){ grid-column-start: auto; }\n`
-    style += `::slotted([start-row~="0${size}"]){ grid-row-start: auto; }\n`
-    return style
+    // cssStyle += `::slotted([start-column~="0${size}"]){ grid-column-start: auto; }\n`
+    // cssStyle += `::slotted([start-row~="0${size}"]){ grid-row-start: auto; }\n`
+    console.log(cssStyle)
   }
   /**
   * @method _breakPointCss

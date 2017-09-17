@@ -23,15 +23,15 @@
   "license": "MIT",
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^1.0.7",
-    "rollup": "^0.41.6",
+    "rollup": "^0.50.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-typescript": "^0.8.1",
-    "rollup-watch": "^3.2.2",
+    "rollup-watch": "^4.0.0",
     "snazzy": "^7.0.0",
     "standard": "^10.0.2",
     "standard-readme": "^2.0.2",
     "typescript": "2.*",
-    "typescript-eslint-parser": "2.*"
+    "typescript-eslint-parser": "8.*"
   },
   "scripts": {
     "building": "npm test && rollup -c",
