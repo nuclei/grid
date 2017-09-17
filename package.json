@@ -34,8 +34,10 @@
     "typescript-eslint-parser": "2.*"
   },
   "scripts": {
-    "build": "npm test && cp -r dist/grid.js docs/grid.js && rollup -c",
-    "build:watch": "npm run build -- -w",
+    "building": "npm test && rollup -c",
+    "build": "npm run building && cp -r dist/grid.js docs/grid.js",
+    "force-build": "rollup -c && cp -r dist/grid.js docs/grid.js",
+    "build:watch": "npm run building -- -w",
     "demo": "cp -r node_modules/@webcomponents/webcomponentsjs docs/polyfill && cp -r dist/grid.js docs/grid.js",
     "test": "standard src/*.ts --parser typescript-eslint-parser | snazzy && tsc src/*.ts --noEmit --pretty --alwaysStrict --noUnusedLocals --target ES5 --lib es6,dom && standard-readme",
     "travis": "npm run test"
