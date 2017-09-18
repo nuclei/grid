@@ -19,13 +19,6 @@
         margin: 0;
       }
       :root{
-        --grid-breakpoint-xs: 0;
-        --grid-breakpoint-s: 600px;
-        --grid-breakpoint-m: 800px;
-        --grid-breakpoint-l: 1000px;
-        --grid-breakpoint-xl: 1200px;
-        --grid-breakpoint-xxl: 1400px;
-        /*--grid-rows: repeat(3, 200px);*/
         --grid-gutter: 10px;
       }
       @media (max-width: 600px) {
@@ -38,6 +31,7 @@
         background: rgb(50,40,30);
         --grid-rows: repeat(8, 75px);
         --grid-columns: 7;
+        max-width: 800px;
       }
       .responsive-columns{
         padding: 5px;
@@ -58,7 +52,7 @@
     </style>
   </head>
   <body>
-    <grid-container class="mondrian" gutter="10px" rowgutter="10px" breakpoints="0s 400m 600l">
+    <grid-container class="mondrian" gutter="10px" rowgutter="10px" breakpoints="0s 600m 1000l">
       <div style="background: FloralWhite;" column="2 12s" row="1"></div>
       <div style="background: FloralWhite;" column="3" row="1"></div>
       <div style="background: gold;" column="2" row="1"></div>
@@ -85,6 +79,11 @@
       <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
       <div style="background: DarkSlateBlue;" column="1">1 column element</div>
     </grid-container>
+    <script type="text/javascript">
+      document.querySelector('.mondrian').addEventListener('sizechange', (e) => {
+        console.log(e)
+      })
+    </script>
     <script type="text/javascript">
     let testing = (tries = 10, iterations = 10) => {
       let testDiv = document.createElement('div')

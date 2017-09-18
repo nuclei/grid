@@ -133,6 +133,18 @@ If you need your gutters to change depending on the breakpoint you can specify t
 ### Columns & Rows
 If you don't want to set your rows and columns via the attributes you can use the css variables `--grid-columns` and `--grid-rows`. You can either change them inside your media queries or you can define them for specific sizes, e.g. `--grid-columns-m`.
 
+## Events
+### sizechange
+The `<grid-container>` emits the `sizechange` event when a new breakpoint is reached and the element changes it size. However when the `<grid-container>` has a `max-width` of e.g. `800px` and therefore can not change the `size` to the breakpoint at `1000px`, no event will be fired.
+
+```javascript
+event.detail = {
+  size: 's', // the new size
+  prevSize: 'm', // the previous size^
+  pixelBoundary: '600' // the pixel width the element needs to have to reach this breakpoint
+}
+```
+
 ## Limitations
 ### Max Columns & Rows
 The grid can be set to any number of columns & rows, however the `column`, `row` and `start-column`, `start-row` attributes on the grids children will only work up to `24`. Should you have a grid with e.g. 30 rows and want to have an element start on row 26, you would need to add custom css `grid-row-start: 26` targeting this element.

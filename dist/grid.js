@@ -175,12 +175,20 @@ class Grid extends HTMLElement {
         for (let breakpoint in element.breakpoints) {
             if (element.clientWidth > element.breakpoints[breakpoint]) {
                 prev = {
-                    size: element.breakpoints[breakpoint],
-                    breakpoint: breakpoint
+                    boundary: element.breakpoints[breakpoint],
+                    size: breakpoint
                 };
             }
             if (element.clientWidth < element.breakpoints[breakpoint] || last === breakpoint) {
-                element.setAttribute('size', prev.breakpoint);
+                let prevSize = element.getAttribute('size');
+                if (prevSize !== prev.size) {
+                    element.dispatchEvent(new CustomEvent('sizechange', { detail: {
+                            size: prev.size,
+                            pixelBoundary: prev.boundary,
+                            prevSize: prevSize
+                        } }));
+                    element.setAttribute('size', prev.size);
+                }
                 break;
             }
         }
