@@ -63,7 +63,7 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   connectedCallback () {
     // attach event handler if not present
     if (window.nucleiGrid === undefined || window.nucleiGrid.elements === undefined || window.nucleiGrid.elements.length <= 0) {
-      window.addEventListener('resize', this._resizeEvent)
+      window.addEventListener('resize', this._debounce(this._resizeEvent, 50))
       window.nucleiGrid = window.nucleiGrid || {}
       window.nucleiGrid.elements = []
     }
@@ -84,6 +84,18 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
       element._elementQuery(element)
     })
   }
+  /**
+   * @method _debounce
+   * @description simple debounce
+   */
+  private _debounce (callback: object, time: number) {
+    let timeout
+    return function () {
+      clearTimeout(timeout) // this clears the timeout so callback in timeout is not called
+      timeout = setTimeout(callback, time)
+    }
+  }
+
   /**
    * @method _elementQuery
    * @description check the size of the element and react if nessesary

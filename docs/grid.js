@@ -148,7 +148,7 @@ class Grid extends HTMLElement {
     }
     connectedCallback() {
         if (window.nucleiGrid === undefined || window.nucleiGrid.elements === undefined || window.nucleiGrid.elements.length <= 0) {
-            window.addEventListener('resize', this._resizeEvent);
+            window.addEventListener('resize', this._debounce(this._resizeEvent, 50));
             window.nucleiGrid = window.nucleiGrid || {};
             window.nucleiGrid.elements = [];
         }
@@ -161,6 +161,13 @@ class Grid extends HTMLElement {
                 return window.nucleiGrid.elements.splice(index, 1);
             element._elementQuery(element);
         });
+    }
+    _debounce(callback, time) {
+        let timeout;
+        return function () {
+            clearTimeout(timeout);
+            timeout = setTimeout(callback, time);
+        };
     }
     _elementQuery(element) {
         let prev = null;
@@ -177,7 +184,6 @@ class Grid extends HTMLElement {
                 break;
             }
         }
-        console.log(element.clientWidth);
     }
     set breakpoints(breakpoints) {
         if (this._breakpointsString === breakpoints)
