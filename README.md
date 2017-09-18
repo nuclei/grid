@@ -57,6 +57,9 @@ Setting the attribute to `autoflow="column"` will set the grid into [`column den
 
 When the attribute is not present the default `row` algorithm will be used. Currently there is no way to set the grid to the `column` non-dense algorithm. If you need to do so, you can simply add it via your css by selecting the `grid-container` and adding the css `grid-auto-flow: column;`.
 
+#### size
+The `size` attribute is used internally and will be set automatically depending on the current with of the element.
+
 ### `grid-container > *` (First-level children of the grid-container)
 **Breakpoint specific units**
 The following breakpoint specific units are available.
