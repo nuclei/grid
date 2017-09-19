@@ -29,9 +29,10 @@
       }
       .mondrian{
         background: rgb(50,40,30);
-        --grid-rows: repeat(8, 75px);
+        grid-template-rows: repeat(8, 75px);
         --grid-columns: 7;
         max-width: 800px;
+        min-height: 500px;
       }
       .responsive-columns{
         padding: 5px;
@@ -53,7 +54,7 @@
   </head>
   <body>
     <grid-container class="mondrian" gutter="10px" rowgutter="10px" breakpoints="0s 600m 1000l">
-      <div style="background: FloralWhite;" column="2 12s" row="1"></div>
+      <div style="background: FloralWhite;" column="2" row="1"></div>
       <div style="background: FloralWhite;" column="3" row="1"></div>
       <div style="background: gold;" column="2" row="1"></div>
       <div style="background: FloralWhite;" column="2 1m" row="2"></div>
@@ -66,7 +67,7 @@
       <div style="background: FloralWhite;" column="2" row="1"></div>
       <div style="background: gold;" column="1" row="2"></div>
       <div style="background: FloralWhite;" start-row="8" start-column="2" column="2" row="1"></div>
-      <div style="background: FloralWhite;" start-column="5 2m" column="2" row="1"></div>
+      <div style="background: FloralWhite;" start-column="4 2m" column="2" row="1"></div>
       <div style="background: steelblue;" column="2" row="1 2m"></div>
     </grid-container>
     <grid-container class="responsive-columns" rowgutter="5px" autoflow>

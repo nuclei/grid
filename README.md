@@ -50,6 +50,12 @@ The `gutter` attribute defines the gutter or gap between the columns and rows of
 #### rowgutter
 The `rowgutter` attribute defines the gutter or gap between the rows of the grid. They are useful when you want to have different values for the row and column gutter and can be set to any valid `length` or `percentage` value, see [grid-row-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap).
 
+#### columns
+The `columns` attribute defines the number of columns in the grid e.g. `columns="12"`. If you want to change the number of columns per breakpoint you can define breakpoint specific sizes by appending the breakpoint to the column number: `columns="1s 2m 6l 12xl"`.
+
+#### rows
+The `rows` attribute defines the number of rows in the grid e.g. `rows="10"`. If you want to change the number of rows per breakpoint you can define breakpoint specific sizes by appending the breakpoint to the row number: `rows="1s 2m 6l 12xl"`.
+
 #### autoflow
 If present, the `autoflow` attribute sets the grid into [`row dense`](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow) mode which means that the grid tries to fill holes in the grid with items that come later in the order, effectively changing the *visual* order of items.
 
@@ -135,6 +141,8 @@ If you need your gutters to change depending on the breakpoint you can specify t
 
 ### Columns & Rows
 If you don't want to set your rows and columns via the attributes you can use the css variables `--grid-columns` and `--grid-rows`. You can either change them inside your media queries or you can define them for specific sizes, e.g. `--grid-columns-m`.
+
+If you need something more specific you can always just overwrite the `grid-template-columns` and `grid-template-rows` property via your css.
 
 ## Events
 ### sizechange
