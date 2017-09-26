@@ -12,27 +12,27 @@ let style = `
 }
 :host([size="xs"]){
   grid-template-columns: repeat(var(--grid-columns-xs, var(--grid-columns, auto-fill)), 1fr);
-  grid-template-rows: var(--grid-rows-xs, var(--grid-rows, none));
+  grid-template-rows: repeat(var(--grid-rows-xs, var(--grid-rows, none)), 1fr);
 }
 :host([size="s"]){
   grid-template-columns: repeat(var(--grid-columns-s, var(--grid-columns, auto-fill)), 1fr);
-  grid-template-rows: var(--grid-rows-s, var(--grid-rows, none));
+  grid-template-rows: repeat(var(--grid-rows-s, var(--grid-rows, none)), 1fr);
 }
 :host([size="m"]){
   grid-template-columns: repeat(var(--grid-columns-m, var(--grid-columns, auto-fill)), 1fr);
-  grid-template-rows: var(--grid-rows-m, var(--grid-rows, none));
+  grid-template-rows: repeat(var(--grid-rows-m, var(--grid-rows, none)), 1fr);
 }
 :host([size="l"]){
   grid-template-columns: repeat(var(--grid-columns-l, var(--grid-columns, auto-fill)), 1fr);
-  grid-template-rows: var(--grid-rows-l, var(--grid-rows, none));
+  grid-template-rows: repeat(var(--grid-rows-l, var(--grid-rows, none)), 1fr);
 }
 :host([size="xl"]){
   grid-template-columns: repeat(var(--grid-columns-xl, var(--grid-columns, auto-fill)), 1fr);
-  grid-template-rows: var(--grid-rows-xl, var(--grid-rows, none));
+  grid-template-rows: repeat(var(--grid-rows-xl, var(--grid-rows, none)), 1fr);
 }
 :host([size="xxl"]){
   grid-template-columns: repeat(var(--grid-columns-xxl, var(--grid-columns, auto-fill)), 1fr);
-  grid-template-rows: var(--grid-rows-xxl, var(--grid-rows, none));
+  grid-template-rows: repeat(var(--grid-rows-xxl, var(--grid-rows, none)), 1fr);
 }
 :host([autoflow]){
   grid-auto-flow: row dense;
@@ -197,7 +197,7 @@ class Grid extends HTMLElement {
         let prev = null;
         let last = Object.keys(element.breakpoints)[Object.keys(element.breakpoints).length - 1];
         for (let breakpoint in element.breakpoints) {
-            if (element.clientWidth > element.breakpoints[breakpoint]) {
+            if (element.clientWidth >= element.breakpoints[breakpoint]) {
                 prev = {
                     boundary: element.breakpoints[breakpoint],
                     size: breakpoint

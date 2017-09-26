@@ -107,7 +107,7 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
     let last = Object.keys(element.breakpoints)[Object.keys(element.breakpoints).length - 1]
     // loop through breakpoints^
     for (let breakpoint in element.breakpoints) {
-      if (element.clientWidth > element.breakpoints[breakpoint]) {
+      if (element.clientWidth >= element.breakpoints[breakpoint]) {
         // keep track of previous item in case next one is to big
         prev = {
           boundary: element.breakpoints[breakpoint],
