@@ -1,16 +1,13 @@
 /* global HTMLElement Window CustomEvent */
-'use strict'
-
-import { style } from './style'
 
 interface Window {
   nucleiGrid: any // eslint-disable-line no-undef
-  addEventListener: any // eslint-disable-line no-undef
-  customElements: any // eslint-disable-line no-undef
+  customElements: CustomElementRegistry // eslint-disable-line no-undef
 }
 
 declare const ShadyCSS // eslint-disable-line no-unused-vars
 declare var window: Window
+declare let style // eslint-disable-line no-unused-vars
 
 let shadowRoot
 let template = document.createElement('template')

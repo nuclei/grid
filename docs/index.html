@@ -20,11 +20,13 @@
       }
       :root{
         --grid-gutter: 10px;
+        --grid-columns: 4;
+        --grid-rows: 4;
       }
       @media (max-width: 600px) {
         :root{
-          --grid-columns: 3;
-          --grid-gutter: 100px;
+          /*--grid-columns: 3;*/
+          /*--grid-gutter: 100px;*/
         }
       }
       .mondrian{
@@ -53,32 +55,36 @@
     </style>
   </head>
   <body>
+    <grid-container gutter="10px" rowgutter="10px" style="height: 300px;" breakpoints="0s 600m 1000l 1200xl">
+      <div style="background: gold;" columns="2m" rows="2m" start-column="2m" start-row="2m"></div>
+      <div style="background: Tomato;" columns="2s 1m" rows="2s 1m" start-column="3s 0m" start-row="3s 0m"></div>
+    </grid-container>
     <grid-container class="mondrian" gutter="10px" rowgutter="10px" breakpoints="0s 600m 1000l">
-      <div style="background: FloralWhite;" column="2" row="1"></div>
-      <div style="background: FloralWhite;" column="3" row="1"></div>
-      <div style="background: gold;" column="2" row="1"></div>
-      <div style="background: FloralWhite;" column="2 1m" row="2"></div>
-      <div style="background: Tomato;" column="5 4m" row="4"></div>
-      <div style="background: gold;" column="1 2m" row="2"></div>
-      <div style="background: FloralWhite;" column="1" row="3"></div>
-      <div style="background: FloralWhite;" column="1" row="2"></div>
-      <div style="background: FloralWhite;" column="1" row="2"></div>
-      <div style="background: FloralWhite;" start-column="4" column="2" row="1"></div>
-      <div style="background: FloralWhite;" column="2" row="1"></div>
-      <div style="background: gold;" column="1" row="2"></div>
-      <div style="background: FloralWhite;" start-row="8" start-column="2" column="2" row="1"></div>
-      <div style="background: FloralWhite;" start-column="4 2m" column="2" row="1"></div>
-      <div style="background: steelblue;" column="2" row="1 2m"></div>
+      <div style="background: FloralWhite;" columns="2" rows="1"></div>
+      <div style="background: FloralWhite;" columns="3" rows="1"></div>
+      <div style="background: gold;" columns="2" rows="1"></div>
+      <div style="background: FloralWhite;" columns="2 1m" rows="2"></div>
+      <div style="background: Tomato;" columns="5 4m" rows="4"></div>
+      <div style="background: gold;" columns="1 2m" rows="2"></div>
+      <div style="background: FloralWhite;" columns="1" rows="3"></div>
+      <div style="background: FloralWhite;" columns="1" rows="2"></div>
+      <div style="background: FloralWhite;" columns="1" rows="2"></div>
+      <div style="background: FloralWhite;" start-column="4" columns="2" rows="1"></div>
+      <div style="background: FloralWhite;" columns="2" rows="1"></div>
+      <div style="background: gold;" columns="1" rows="2"></div>
+      <div style="background: FloralWhite;" start-row="8" start-column="2" columns="2" rows="1"></div>
+      <div style="background: FloralWhite;" start-column="4 2m" columns="2" rows="1"></div>
+      <div style="background: steelblue;" columns="2" rows="1 2m"></div>
     </grid-container>
     <grid-container class="responsive-columns" rowgutter="5px" autoflow>
-      <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
-      <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
-      <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
-      <div style="background: navy;" column="3m 6xs">An element on 2 columns</div>
-      <div style="background: navy;" column="3m 6xs">An element on 2 columns</div>
-      <div style="background: navy;" column="3m 6xs">An element on 2 columns</div>
-      <div style="background: indigo;" column="2m 3xs">An element on 2 columns</div>
-      <div style="background: DarkSlateBlue;" column="1">1 column element</div>
+      <div style="background: indigo;" columns="2m 3xs">An element on 2 columns</div>
+      <div style="background: indigo;" columns="2m 3xs">An element on 2 columns</div>
+      <div style="background: indigo;" columns="2m 3xs">An element on 2 columns</div>
+      <div style="background: navy;" columns="3m 6xs">An element on 2 columns</div>
+      <div style="background: navy;" columns="3m 6xs">An element on 2 columns</div>
+      <div style="background: navy;" columns="3m 6xs">An element on 2 columns</div>
+      <div style="background: indigo;" columns="2m 3xs">An element on 2 columns</div>
+      <div style="background: DarkSlateBlue;" columns="1">1 column element</div>
     </grid-container>
     <script type="text/javascript">
       document.querySelector('.mondrian').addEventListener('sizechange', (e) => {

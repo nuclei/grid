@@ -33,10 +33,10 @@ Simply add a `<grid-container>` element to your page. All first level children o
 
 ```html
 <grid-container>
-    <div column="3">
+    <div columns="3" start-column="2">
       Cats are the best.
     </div>
-    <div column="3">
+    <div columns="3" rows="s" start-row="3">
       <img src="../media/definitlyNotACatPicture.png" alt="a cat" />
     </div>
 </grid-container>
@@ -51,7 +51,7 @@ The `gutter` attribute defines the gutter or gap between the columns and rows of
 The `rowgutter` attribute defines the gutter or gap between the rows of the grid. They are useful when you want to have different values for the row and column gutter and can be set to any valid `length` or `percentage` value, see [grid-row-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap).
 
 #### columns
-The `columns` attribute defines the number of columns in the grid e.g. `columns="12"`. If you want to change the number of columns per breakpoint you can define breakpoint specific sizes by appending the breakpoint to the column number: `columns="1s 2m 6l 12xl"`.
+The `columns` attribute defines the number of columns in the grid e.g. `columns="12"`. If you want to change the number of columns per breakpoint you can define breakpoint specific sizes by appending the breakpoint to the column number: `columns="1s 2m 6l"`.
 
 #### rows
 The `rows` attribute defines the number of rows in the grid e.g. `rows="10"`. If you want to change the number of rows per breakpoint you can define breakpoint specific sizes by appending the breakpoint to the row number: `rows="1s 2m 6l 12xl"`.
@@ -69,31 +69,31 @@ The `size` attribute is used internally and will be set automatically depending 
 ### `grid-container > *` (First-level children of the grid-container)
 **Breakpoint specific units**
 The following breakpoint specific units are available.
-`1xs`, `1s`, `1m`, `1l`, `1xl`, `1xxl`
+`1s`, `1m`, `1l`
 
-If you set an items `column="4xs 2m"` it would mean that this items fills 4 columns for the `xs` (and if available `s`) breakpoints and 2 columns for the `m` and bigger.
+If you set an items `column="4s 2l"` it would mean that this items fills 4 columns for the `s` (and if available `m`) breakpoints and 2 columns for the `l` and bigger.
 
 You may replace the `1` with any number up to the `max-columns` / `max-rows` value.
 
-#### column
-You may specify an integer for the general amount of columns the item should fill and/or any or all of the breakpoint specific units.
+#### columns
+You may specify an integer for the general amount of columns the item should fill and/or any or all of the breakpoint specific units within the `columns` attribute.
 
-#### row
-You may specify an integer for the general amount of rows the item should fill and/or any or all of the breakpoint specific units.
+#### rows
+You may specify an integer for the general amount of rows the item should fill and/or any or all of the breakpoint specific units within the `rows` attribute.
 
 #### start-column
 You may specify an integer for the general column the item should start on and/or any or all of the breakpoint specific units.
-An item with the attributes `column="2" start-column="3"` would start on the 2nd column and extend for 3 columns so it would span the 2nd, 3rd and 4th column.
+An item with the attributes `columns="2" start-column="3"` would start on the 2nd column and extend for 3 columns so it would span the 2nd, 3rd and 4th column.
 
-A special 0 value e.g. `0xs` is available to reset the offset.
+A special 0 value e.g. `0s` is available to reset the offset.
 
 #### start-row
 You may specify an integer for the general row the item should start on and/or any or all of the breakpoint specific units.
 
-A special 0 value e.g. `0xs` is available to reset the offset.
+A special 0 value e.g. `0s` is available to reset the offset.
 
 ## Element Queries / Breakpoints
-You may defined any or all of the following breakpoints: `xs`, `s`, `m`, `l`, `xl`, `xxl`. Note that it is advised to use 0 for your lowest breakpoint. The breakpoints are used to create **element queries** meaning that a breakpoint will be activated once the `<grid-container>` (*not the page!*) reaches the specified width. Only the biggest breakpoint will be used.
+You may defined any or all of the breakpoints. Note that it is advised to use 0 for your lowest breakpoint. The breakpoints are used to create **element queries** meaning that a breakpoint will be activated once the `<grid-container>` (*not the page!*) reaches the specified width. Only the biggest breakpoint will be used.
 
 Breakpoints can be defined per `<grid-container>` using the `breakpoints` attribute. You must provide a space separated list of integers with the size attached, e.g. `600m` for a medium `m` breakpoint that is activated when the element is reaches a `600px` width.
 
@@ -109,12 +109,9 @@ Alternatively you can define common breakpoints for all grids by defining the `b
 <script type="text/javascript">
   window.nucleiGrid = {
     breakpoints: {
-      xs: 0,
-      s: 60,
+      s: 0,
       m: 800,
-      l: 1000,
-      xl: 1200,
-      xxl: 1500
+      l: 1000
     }
   }
 </script>
@@ -169,6 +166,13 @@ $ npm test
 
 ## Build
 Run `npm run build` to convert your source file defined in the `package.json` as `package.config.src` into a compiled js file defined by `package.main`.
+
+### Define your own breakpoints, columns and rows
+If you want to use more breakpoints you can simply build the component yourself and specify the number of `columns`, `rows` and the breakpoints you want.
+
+npm test && rollup -c --intro "$(columns=16 rows=10 breakpoints=xs,s,m,l,xl node devstyle.js)" && cp -r dist/grid.js docs/grid.js
+
+Make sure to also define the specified breakpoints either per grid or in the `window.nucleiGrid.breakpoints` property.
 
 ```
 $ npm run build
