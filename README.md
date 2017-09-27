@@ -170,7 +170,7 @@ Run `npm run build` to convert your source file defined in the `package.json` as
 ### Define your own breakpoints, columns and rows
 If you want to use more breakpoints you can simply build the component yourself and specify the number of `columns`, `rows` and the breakpoints you want.
 
-npm test && rollup -c --intro "$(columns=16 rows=10 breakpoints=xs,s,m,l,xl node devstyle.js)" && cp -r dist/grid.js docs/grid.js
+npm test && rollup -c --intro "$(columns=16 rows=10 breakpoints=xs,s,m,l,xl node cssgenerator.js)" && cp -r dist/grid.js docs/grid.js
 
 Make sure to also define the specified breakpoints either per grid or in the `window.nucleiGrid.breakpoints` property.
 

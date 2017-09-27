@@ -34,7 +34,7 @@
     "typescript-eslint-parser": "8.*"
   },
   "scripts": {
-    "building": "npm test && rollup -c --intro \"$(node devstyle.js)\"",
+    "building": "npm test && rollup -c --intro \"$(node cssgenerator.js)\"",
     "build": "npm run building && cp -r dist/grid.js docs/grid.js",
     "force-build": "rollup -c && cp -r dist/grid.js docs/grid.js",
     "build:watch": "npm run building -- -w",
