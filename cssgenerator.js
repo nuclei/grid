@@ -59,6 +59,7 @@ let style = () => {
   <style>
   :host{
     display: grid;
+    width: 100%;
     grid-template-columns: repeat(var(--grid-columns, auto-fill), 1fr);
     grid-template-rows: repeat(var(--grid-rows, none), 1fr);
     grid-gap: var(--grid-gutter, 0);

@@ -114,14 +114,14 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
       // if next element is to big or it is the last element: activate
       if (element.clientWidth < element.breakpoints[breakpoint] || last === breakpoint) {
         // get old size
-        let prevSize = element.getAttribute('size')
+        let oldSize = element.getAttribute('size')
         // only update if size actually changed
-        if (prevSize !== prev.size) {
+        if (oldSize !== prev.size) {
           // dispatch custom sizechange event
           element.dispatchEvent(new CustomEvent('sizechange', { detail: {
             size: prev.size,
             pixelBoundary: prev.boundary,
-            prevSize: prevSize
+            prevSize: oldSize
           }}))
           // change size attribute
           element.setAttribute('size', prev.size)

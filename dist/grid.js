@@ -5,6 +5,7 @@ let style = `
   <style>
   :host{
     display: grid;
+    width: 100%;
     grid-template-columns: repeat(var(--grid-columns, auto-fill), 1fr);
     grid-template-rows: repeat(var(--grid-rows, none), 1fr);
     grid-gap: var(--grid-gutter, 0);
@@ -361,12 +362,12 @@ class Grid extends HTMLElement {
                 };
             }
             if (element.clientWidth < element.breakpoints[breakpoint] || last === breakpoint) {
-                let prevSize = element.getAttribute('size');
-                if (prevSize !== prev.size) {
+                let oldSize = element.getAttribute('size');
+                if (oldSize !== prev.size) {
                     element.dispatchEvent(new CustomEvent('sizechange', { detail: {
                             size: prev.size,
                             pixelBoundary: prev.boundary,
-                            prevSize: prevSize
+                            prevSize: oldSize
                         } }));
                     element.setAttribute('size', prev.size);
                 }
