@@ -352,16 +352,20 @@ class Grid extends HTMLElement {
         };
     }
     _elementQuery(element) {
+        let gridGap = window.getComputedStyle(element).gridColumnGap;
+        element.style.gridColumnGap = 0;
+        let elementWidth = element.clientWidth;
+        element.style.gridColumnGap = gridGap;
         let prev = null;
         let last = Object.keys(element.breakpoints)[Object.keys(element.breakpoints).length - 1];
         for (let breakpoint in element.breakpoints) {
-            if (element.clientWidth >= element.breakpoints[breakpoint]) {
+            if (elementWidth >= element.breakpoints[breakpoint] || prev === null) {
                 prev = {
                     boundary: element.breakpoints[breakpoint],
                     size: breakpoint
                 };
             }
-            if (element.clientWidth < element.breakpoints[breakpoint] || last === breakpoint) {
+            if (elementWidth < element.breakpoints[breakpoint] || last === breakpoint) {
                 let oldSize = element.getAttribute('size');
                 if (oldSize !== prev.size) {
                     element.dispatchEvent(new CustomEvent('sizechange', { detail: {

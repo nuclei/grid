@@ -1,5 +1,7 @@
-/* global HTMLElement Window CustomEvent */
-
+/* global HTMLElement Window CustomEvent CSSStyleDeclaration */
+interface CSSStyleDeclaration {
+  gridColumnGap: any // eslint-disable-line no-undef
+}
 interface Window {
   nucleiGrid: any // eslint-disable-line no-undef
   customElements: CustomElementRegistry // eslint-disable-line no-undef
@@ -98,13 +100,17 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
    * @description check the size of the element and react if nessesary
    */
   private _elementQuery (element) {
+    let gridGap = window.getComputedStyle(element).gridColumnGap
+    element.style.gridColumnGap = 0
+    let elementWidth = element.clientWidth
+    element.style.gridColumnGap = gridGap
     // state variable
     let prev = null
     // get last item
     let last = Object.keys(element.breakpoints)[Object.keys(element.breakpoints).length - 1]
-    // loop through breakpoints^
+    // loop through breakpoints
     for (let breakpoint in element.breakpoints) {
-      if (element.clientWidth >= element.breakpoints[breakpoint]) {
+      if (elementWidth >= element.breakpoints[breakpoint] || prev === null) {
         // keep track of previous item in case next one is to big
         prev = {
           boundary: element.breakpoints[breakpoint],
@@ -112,7 +118,7 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
         }
       }
       // if next element is to big or it is the last element: activate
-      if (element.clientWidth < element.breakpoints[breakpoint] || last === breakpoint) {
+      if (elementWidth < element.breakpoints[breakpoint] || last === breakpoint) {
         // get old size
         let oldSize = element.getAttribute('size')
         // only update if size actually changed
