@@ -14,14 +14,20 @@ let style = `
   :host([size="s"]){
       grid-template-columns: repeat(var(--grid-columns-s, var(--grid-columns, auto-fill)), 1fr);
       grid-template-rows: repeat(var(--grid-rows-s, var(--grid-rows, none)), 1fr);
+      grid-gap: var(--grid-gutter-s, var(--grid-gutter, 0));
+      grid-row-gap: var(--grid-row-gutter-s, var(--grid-row-gutter, var(--grid-gutter, 0)));
     }
   :host([size="m"]){
       grid-template-columns: repeat(var(--grid-columns-m, var(--grid-columns, auto-fill)), 1fr);
       grid-template-rows: repeat(var(--grid-rows-m, var(--grid-rows, none)), 1fr);
+      grid-gap: var(--grid-gutter-m, var(--grid-gutter, 0));
+      grid-row-gap: var(--grid-row-gutter-m, var(--grid-row-gutter, var(--grid-gutter, 0)));
     }
   :host([size="l"]){
       grid-template-columns: repeat(var(--grid-columns-l, var(--grid-columns, auto-fill)), 1fr);
       grid-template-rows: repeat(var(--grid-rows-l, var(--grid-rows, none)), 1fr);
+      grid-gap: var(--grid-gutter-l, var(--grid-gutter, 0));
+      grid-row-gap: var(--grid-row-gutter-l, var(--grid-row-gutter, var(--grid-gutter, 0)));
     }
 
   :host([autoflow]){
@@ -353,9 +359,12 @@ class Grid extends HTMLElement {
     }
     _elementQuery(element) {
         let gridGap = window.getComputedStyle(element).gridColumnGap;
-        element.style.gridColumnGap = 0;
         let elementWidth = element.clientWidth;
-        element.style.gridColumnGap = gridGap;
+        if (gridGap > 0) {
+            element.style.gridColumnGap = 0;
+            elementWidth = element.clientWidth;
+            element.style.gridColumnGap = gridGap;
+        }
         let prev = null;
         let last = Object.keys(element.breakpoints)[Object.keys(element.breakpoints).length - 1];
         for (let breakpoint in element.breakpoints) {
@@ -403,14 +412,20 @@ class Grid extends HTMLElement {
         if (this._gutter === gutter)
             return;
         this._gutter = gutter;
-        this.style.setProperty('--grid-gutter', gutter);
+        gutter.split(' ').forEach((item) => {
+            let size = item.replace(/[0-9]+/g, '').trim();
+            this.style.setProperty(`--grid-gutter${size.length > 0 ? '-' : ''}${size}`, `${item.replace(/[^0-9]*/g, '').trim()}px`);
+        });
         this.setAttribute('gutter', gutter);
     }
     set rowgutter(rowgutter) {
         if (this._rowgutter === rowgutter)
             return;
         this._rowgutter = rowgutter;
-        this.style.setProperty('--grid-row-gutter', rowgutter);
+        rowgutter.split(' ').forEach((item) => {
+            let size = item.replace(/[0-9]+/g, '').trim();
+            this.style.setProperty(`--grid-row-gutter${size.length > 0 ? '-' : ''}${size}`, `${item.replace(/[^0-9]*/g, '').trim()}px`);
+        });
         this.setAttribute('rowgutter', rowgutter);
     }
     set columns(columns) {

@@ -101,9 +101,12 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
    */
   private _elementQuery (element) {
     let gridGap = window.getComputedStyle(element).gridColumnGap
-    element.style.gridColumnGap = 0
     let elementWidth = element.clientWidth
-    element.style.gridColumnGap = gridGap
+    if (gridGap > 0) {
+      element.style.gridColumnGap = 0
+      elementWidth = element.clientWidth
+      element.style.gridColumnGap = gridGap
+    }
     // state variable
     let prev = null
     // get last item
@@ -177,7 +180,11 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
     if (this._gutter === gutter) return
     this._gutter = gutter
 
-    this.style.setProperty('--grid-gutter', gutter)
+    gutter.split(' ').forEach((item) => {
+      let size = item.replace(/[0-9]+/g, '').trim()
+      this.style.setProperty(`--grid-gutter${size.length > 0 ? '-' : ''}${size}`, `${item.replace(/[^0-9]*/g, '').trim()}px`)
+    })
+
     this.setAttribute('gutter', gutter)
   }
   /**
@@ -188,7 +195,11 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
     if (this._rowgutter === rowgutter) return
     this._rowgutter = rowgutter
 
-    this.style.setProperty('--grid-row-gutter', rowgutter)
+    rowgutter.split(' ').forEach((item) => {
+      let size = item.replace(/[0-9]+/g, '').trim()
+      this.style.setProperty(`--grid-row-gutter${size.length > 0 ? '-' : ''}${size}`, `${item.replace(/[^0-9]*/g, '').trim()}px`)
+    })
+
     this.setAttribute('rowgutter', rowgutter)
   }
   /**

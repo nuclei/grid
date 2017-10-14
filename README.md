@@ -45,10 +45,10 @@ Simply add a `<grid-container>` element to your page. All first level children o
 ## Attributes
 ### `<grid-container>`
 #### gutter
-The `gutter` attribute defines the gutter or gap between the columns and rows of the cells in the grid. They can be set to any valid `length` or `percentage` value, see [grid-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap).
+The `gutter` attribute defines the gutter or gap in pixels between the columns and rows of the cells in the grid. They can either be set to one value e.g. `gutter="10"` (which will translate into a `10px` gap) or to a specific value per breakpoint e.g. `gutter="10s 20m 25l"`.
 
 #### rowgutter
-The `rowgutter` attribute defines the gutter or gap between the rows of the grid. They are useful when you want to have different values for the row and column gutter and can be set to any valid `length` or `percentage` value, see [grid-row-gap](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap).
+The `rowgutter` attribute defines the gutter or gap in pixels between the rows of the grid. It is useful when you want to have different values for the row and column gutter and can be set either a general value e.g. `10` or a specific value per breakpoint e.g. `gutter="10s 20m 25l"` exactly like the `gutter` attribute.
 
 #### columns
 The `columns` attribute defines the number of columns in the grid e.g. `columns="12"`. If you want to change the number of columns per breakpoint you can define breakpoint specific sizes by appending the breakpoint to the column number: `columns="1s 2m 6l"`.
