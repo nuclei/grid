@@ -8,26 +8,26 @@ let style = `
     width: 100%;
     grid-template-columns: repeat(var(--grid-columns, auto-fill), 1fr);
     grid-template-rows: repeat(var(--grid-rows, none), 1fr);
-    grid-gap: var(--grid-gutter, 0);
-    grid-row-gap: var(--grid-row-gutter, var(--grid-gutter, 0));
+    grid-column-gap: var(--grid-gutter, 0);
+    grid-row-gap: var(--grid-row-gutter, 0);
   }
   :host([size="s"]){
       grid-template-columns: repeat(var(--grid-columns-s, var(--grid-columns, auto-fill)), 1fr);
       grid-template-rows: repeat(var(--grid-rows-s, var(--grid-rows, none)), 1fr);
-      grid-gap: var(--grid-gutter-s, var(--grid-gutter, 0));
-      grid-row-gap: var(--grid-row-gutter-s, var(--grid-row-gutter, var(--grid-gutter, 0)));
+      grid-column-gap: var(--grid-gutter-s, var(--grid-gutter, 0));
+      grid-row-gap: var(--grid-row-gutter-s, var(--grid-row-gutter, 0));
     }
   :host([size="m"]){
       grid-template-columns: repeat(var(--grid-columns-m, var(--grid-columns, auto-fill)), 1fr);
       grid-template-rows: repeat(var(--grid-rows-m, var(--grid-rows, none)), 1fr);
-      grid-gap: var(--grid-gutter-m, var(--grid-gutter, 0));
-      grid-row-gap: var(--grid-row-gutter-m, var(--grid-row-gutter, var(--grid-gutter, 0)));
+      grid-column-gap: var(--grid-gutter-m, var(--grid-gutter, 0));
+      grid-row-gap: var(--grid-row-gutter-m, var(--grid-row-gutter, 0));
     }
   :host([size="l"]){
       grid-template-columns: repeat(var(--grid-columns-l, var(--grid-columns, auto-fill)), 1fr);
       grid-template-rows: repeat(var(--grid-rows-l, var(--grid-rows, none)), 1fr);
-      grid-gap: var(--grid-gutter-l, var(--grid-gutter, 0));
-      grid-row-gap: var(--grid-row-gutter-l, var(--grid-row-gutter, var(--grid-gutter, 0)));
+      grid-column-gap: var(--grid-gutter-l, var(--grid-gutter, 0));
+      grid-row-gap: var(--grid-row-gutter-l, var(--grid-row-gutter, 0));
     }
 
   :host([autoflow]){

@@ -15,8 +15,8 @@ let style = () => {
       result += `  :host([size="${breakpoint}"]){
       grid-template-columns: repeat(var(--grid-columns-${breakpoint}, var(--grid-columns, auto-fill)), 1fr);
       grid-template-rows: repeat(var(--grid-rows-${breakpoint}, var(--grid-rows, none)), 1fr);
-      grid-gap: var(--grid-gutter-${breakpoint}, var(--grid-gutter, 0));
-      grid-row-gap: var(--grid-row-gutter-${breakpoint}, var(--grid-row-gutter, var(--grid-gutter, 0)));
+      grid-column-gap: var(--grid-gutter-${breakpoint}, var(--grid-gutter, 0));
+      grid-row-gap: var(--grid-row-gutter-${breakpoint}, var(--grid-row-gutter, 0));
     }\n`
     })
     return result
@@ -64,8 +64,8 @@ let style = () => {
     width: 100%;
     grid-template-columns: repeat(var(--grid-columns, auto-fill), 1fr);
     grid-template-rows: repeat(var(--grid-rows, none), 1fr);
-    grid-gap: var(--grid-gutter, 0);
-    grid-row-gap: var(--grid-row-gutter, var(--grid-gutter, 0));
+    grid-column-gap: var(--grid-gutter, 0);
+    grid-row-gap: var(--grid-row-gutter, 0);
   }
 ${host()}
   :host([autoflow]){
