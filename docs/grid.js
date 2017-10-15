@@ -341,7 +341,9 @@ class Grid extends HTMLElement {
             window.nucleiGrid.elements = [];
         }
         window.nucleiGrid.elements.push(this);
-        this._elementQuery(this);
+        setTimeout(() => {
+            this._elementQuery(this);
+        }, 10);
     }
     _resizeEvent() {
         window.nucleiGrid.elements.forEach((element, index) => {

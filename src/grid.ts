@@ -69,7 +69,9 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
     // add element to list for resize event
     window.nucleiGrid.elements.push(this)
     // run element query for initial size
-    this._elementQuery(this)
+    setTimeout(() => {
+      this._elementQuery(this)
+    }, 10)
   }
   /**
    * @method _resizeEvent
