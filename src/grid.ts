@@ -4,6 +4,7 @@ interface CSSStyleDeclaration {
 }
 interface Window {
   nucleiGrid: any // eslint-disable-line no-undef
+  _nucleiGridInternal: any  // eslint-disable-line no-undef
   customElements: CustomElementRegistry // eslint-disable-line no-undef
 }
 
@@ -61,13 +62,13 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
    */
   connectedCallback () {
     // attach event handler if not present
-    if (window.nucleiGrid === undefined || window.nucleiGrid.elements === undefined || window.nucleiGrid.elements.length <= 0) {
+    if (window._nucleiGridInternal === undefined || window._nucleiGridInternal.elements === undefined) {
+      window._nucleiGridInternal = window._nucleiGridInternal || {}
+      window._nucleiGridInternal.elements = []
       window.addEventListener('resize', this._debounce(this._resizeEvent, 50))
-      window.nucleiGrid = window.nucleiGrid || {}
-      window.nucleiGrid.elements = []
     }
     // add element to list for resize event
-    window.nucleiGrid.elements.push(this)
+    window._nucleiGridInternal.elements.push(this)
     // run element query for initial size
     setTimeout(() => {
       this._elementQuery(this)
@@ -78,9 +79,9 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
    * @description resize event function
    */
   private _resizeEvent () {
-    window.nucleiGrid.elements.forEach((element, index) => {
+    window._nucleiGridInternal.elements.forEach((element, index) => {
       // if element not in DOM remove from array and return
-      if (!document.body.contains(element)) return window.nucleiGrid.elements.splice(index, 1)
+      if (!document.body.contains(element)) return window._nucleiGridInternal.elements.splice(index, 1)
       // call elementQuery if element is in dom
       element._elementQuery(element)
     })

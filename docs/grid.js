@@ -335,20 +335,20 @@ class Grid extends HTMLElement {
         this[attrName] = newVal;
     }
     connectedCallback() {
-        if (window.nucleiGrid === undefined || window.nucleiGrid.elements === undefined || window.nucleiGrid.elements.length <= 0) {
+        if (window._nucleiGridInternal === undefined || window._nucleiGridInternal.elements === undefined) {
+            window._nucleiGridInternal = window._nucleiGridInternal || {};
+            window._nucleiGridInternal.elements = [];
             window.addEventListener('resize', this._debounce(this._resizeEvent, 50));
-            window.nucleiGrid = window.nucleiGrid || {};
-            window.nucleiGrid.elements = [];
         }
-        window.nucleiGrid.elements.push(this);
+        window._nucleiGridInternal.elements.push(this);
         setTimeout(() => {
             this._elementQuery(this);
         }, 10);
     }
     _resizeEvent() {
-        window.nucleiGrid.elements.forEach((element, index) => {
+        window._nucleiGridInternal.elements.forEach((element, index) => {
             if (!document.body.contains(element))
-                return window.nucleiGrid.elements.splice(index, 1);
+                return window._nucleiGridInternal.elements.splice(index, 1);
             element._elementQuery(element);
         });
     }
