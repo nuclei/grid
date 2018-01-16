@@ -362,7 +362,7 @@ class Grid extends HTMLElement {
     _elementQuery(element) {
         let gridGap = window.getComputedStyle(element).gridColumnGap;
         let elementWidth = element.clientWidth;
-        if (gridGap > 0) {
+        if (parseInt(gridGap) > 0) {
             element.style.gridColumnGap = 0;
             elementWidth = element.clientWidth;
             element.style.gridColumnGap = gridGap;
