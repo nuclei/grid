@@ -71,7 +71,7 @@ The `size` attribute is used internally and will be set automatically depending 
 The following breakpoint specific units are available.
 `1s`, `1m`, `1l`
 
-If you set an items `column="4s 2l"` it would mean that this items fills 4 columns for the `s` (and if available `m`) breakpoints and 2 columns for the `l` and bigger.
+If you set an items `columns="4s 2l"` it would mean that this items fills 4 columns for the `s` (and if available `m`) breakpoints and 2 columns for the `l` and bigger.
 
 You may replace the `1` with any number up to the `max-columns` / `max-rows` value.
 
