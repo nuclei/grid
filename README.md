@@ -54,7 +54,7 @@ The `rowgutter` attribute defines the gutter or gap in pixels between the **rows
 The `columns` attribute defines the number of columns in the grid e.g. `columns="12"`. If you want to change the number of columns per breakpoint you can define breakpoint specific sizes by appending the breakpoint to the column number: `columns="1s 2m 6l"`.
 
 #### rows
-The `rows` attribute defines the number of rows in the grid e.g. `rows="10"`. If you want to change the number of rows per breakpoint you can define breakpoint specific sizes by appending the breakpoint to the row number: `rows="1s 2m 6l 12xl"`.
+The `rows` attribute defines the number of rows in the grid e.g. `rows="10"`. If you want to change the number of rows per breakpoint you can define breakpoint specific sizes by appending the breakpoint to the row number: `rows="1s 2m 6l"`.
 
 #### autoflow
 If present, the `autoflow` attribute sets the grid into [`row dense`](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow) mode which means that the grid tries to fill holes in the grid with items that come later in the order, effectively changing the *visual* order of items.
@@ -155,7 +155,7 @@ event.detail = {
 
 ## Limitations
 ### Max Columns & Rows
-The grid can be set to any number of columns & rows, however the `column`, `row` and `start-column`, `start-row` attributes on the grids children will only work up to `24`. Should you have a grid with e.g. 30 rows and want to have an element start on row 26, you would need to add custom css `grid-row-start: 26` targeting this element.
+The grid can be set to any number of columns & rows, however the `column`, `row` and `start-column`, `start-row` attributes on the grids children will only work up to `16`. Should you have more rows, simply add the rows via standard css e.g. `grid-row-start: 18` targeting this element or by defining the appropriate css custom property e.g. `--column-end-m: 18`.
 
 ## Tests
 By default `npm test` assures you stick to the `standardjs` rules, catches typescript errors and validates your readme using `standard-readme`.
@@ -166,15 +166,3 @@ $ npm test
 
 ## Build
 Run `npm run build` to convert your source file defined in the `package.json` as `package.config.src` into a compiled js file defined by `package.main`.
-
-### Define your own breakpoints, columns and rows
-If you want to use more breakpoints you can simply build the component yourself and specify the number of `columns`, `rows` and the breakpoints you want.
-
-npm test && rollup -c --intro "$(columns=16 rows=10 breakpoints=xs,s,m,l,xl node cssgenerator.js)" && cp -r dist/grid.js docs/grid.js
-
-Make sure to also define the specified breakpoints either per grid or in the `window.nucleiGrid.breakpoints` property.
-
-```
-$ npm run build
-$ npm run build:watch
-```

@@ -20,21 +20,32 @@
       }
       :root{
         --grid-gutter: 10px;
-        --grid-columns: 4;
-        --grid-rows: 4;
+        --grid-columns: 16;
       }
-      @media (max-width: 600px) {
-        :root{
-          /*--grid-columns: 3;*/
-          /*--grid-gutter: 100px;*/
-        }
+      .bars-container{
+        height: 400px;
+        display: flex;
       }
+      .bars-horizontal{
+        height: 100%;
+        margin-right: 10px;
+      }
+      .bars-vertical{
+        height: 100%;
+      }
+      .bar-horizontal{ background: gold; }
+      .bar-vertical{ background: blue; }
+      .bars-horizontal[size="m"] .bar-horizontal{ background: blue; }
+      .bars-vertical[size="m"] .bar-vertical{ background: gold; }
+      .bars-horizontal[size="l"] .bar-horizontal{ background: gold; }
+      .bars-vertical[size="l"] .bar-vertical{ background: blue; }
       .mondrian{
         background: rgb(50,40,30);
         grid-template-rows: repeat(8, 75px);
         --grid-columns: 7;
         max-width: 800px;
         min-height: 500px;
+        margin-top: 100px;
       }
       .responsive-columns{
         padding: 5px;
@@ -55,14 +66,49 @@
     </style>
   </head>
   <body>
-    <grid-container gutter="10" rowgutter="10" style="height: 300px;" breakpoints="0s 600m 1000l 1200xl">
-      <div style="background: gold;" columns="2m" rows="2m" start-column="2m" start-row="2m"></div>
-      <div style="background: Tomato;" columns="2s 1m" rows="2s 1m" start-column="3s 0m" start-row="3s 0m"></div>
-    </grid-container>
+    <div class="bars-container">
+      <grid-container rowgutter="5s 10m 5l" class="bars-horizontal" breakpoints="0s 300m 500l">
+        <div class="bar-horizontal" columns="1s 1m 1l" start-column="16s 16m 16l"></div>
+        <div class="bar-horizontal" columns="2s 2m 2l" start-column="15s 15m 15l"></div>
+        <div class="bar-horizontal" columns="3s 3m 3l" start-column="14s 14m 14l"></div>
+        <div class="bar-horizontal" columns="4s 4m 4l" start-column="13s 13m 13l"></div>
+        <div class="bar-horizontal" columns="5s 5m 5l" start-column="12s 12m 12l"></div>
+        <div class="bar-horizontal" columns="6s 6m 6l" start-column="11s 11m 11l"></div>
+        <div class="bar-horizontal" columns="7s 7m 7l" start-column="10s 10m 10l"></div>
+        <div class="bar-horizontal" columns="8s 8m 8l" start-column="9s 9m 9l"></div>
+        <div class="bar-horizontal" columns="9s 9m 9l" start-column="8s 8m 8l"></div>
+        <div class="bar-horizontal" columns="10s 10m 10l" start-column="7s 7m 7l"></div>
+        <div class="bar-horizontal" columns="11s 11m 11l" start-column="6s 6m 6l"></div>
+        <div class="bar-horizontal" columns="12s 12m 12l" start-column="5s 5m 5l"></div>
+        <div class="bar-horizontal" columns="13s 13m 13l" start-column="4s 4m 4l"></div>
+        <div class="bar-horizontal" columns="14s 14m 14l" start-column="3s 3m 3l"></div>
+        <div class="bar-horizontal" columns="15s 15m 15l" start-column="2s 2m 2l"></div>
+        <div class="bar-horizontal" columns="16s 16m 16l" start-column="1s 1m 1l"></div>
+      </grid-container>
+      <grid-container class="bars-vertical" gutter="2s 5m 10l" breakpoints="0s 300m 500l">
+        <div class="bar-vertical" start-row="1s 1m 1l" rows="16s 16m 16l"></div>
+        <div class="bar-vertical" start-row="2s 2m 2l" rows="15s 15m 15l"></div>
+        <div class="bar-vertical" start-row="3s 3m 3l" rows="14s 14m 14l"></div>
+        <div class="bar-vertical" start-row="4s 4m 4l" rows="13s 13m 13l"></div>
+        <div class="bar-vertical" start-row="5s 5m 5l" rows="12s 12m 12l"></div>
+        <div class="bar-vertical" start-row="6s 6m 6l" rows="11s 11m 11l"></div>
+        <div class="bar-vertical" start-row="7s 7m 7l" rows="10s 10m 10l"></div>
+        <div class="bar-vertical" start-row="8s 8m 8l" rows="9s 9m 9l"></div>
+        <div class="bar-vertical" start-row="9s 9m 9l" rows="8s 8m 8l"></div>
+        <div class="bar-vertical" start-row="10s 10m 10l" rows="7s 7m 7l"></div>
+        <div class="bar-vertical" start-row="11s 11m 11l" rows="6s 6m 6l"></div>
+        <div class="bar-vertical" start-row="12s 12m 12l" rows="5s 5m 5l"></div>
+        <div class="bar-vertical" start-row="13s 13m 13l" rows="4s 4m 4l"></div>
+        <div class="bar-vertical" start-row="14s 14m 14l" rows="3s 3m 3l"></div>
+        <div class="bar-vertical" start-row="15s 15m 15l" rows="2s 2m 2l"></div>
+        <div class="bar-vertical" start-row="16s 16m 16l" rows="1s 1m 1l"></div>
+      </grid-container>
+    </div>
+
     <grid-container class="mondrian" gutter="10s 20m 50l" rowgutter="10" breakpoints="0s 600m 1000l">
       <div style="background: FloralWhite;" columns="2" rows="1"></div>
       <div style="background: FloralWhite;" columns="3" rows="1"></div>
-      <div style="background: gold;" columns="2" rows="1"></div>
+      <div class="bar-horizontal" columns="2" rows="1"></div>
       <div style="background: FloralWhite;" columns="2 1m" rows="2"></div>
       <div style="background: Tomato;" columns="5 4m" rows="4"></div>
       <div style="background: gold;" columns="1 2m" rows="2"></div>
@@ -106,13 +152,9 @@
         var end = window.performance.now()
         var thisResult = end - start
         result += thisResult
-        // for (var i = 0; i < iterations; i++ ) {
-        //   wc[i].parentNode.removeChild(wc[i])
-        // }
         console.log(`Try ${b+1} with ${iterations} iterations took ${(thisResult/1000).toFixed(2)}s`);
       }
       result = result/tries
-      // testDiv.parentNode.removeChild(testDiv);
       console.log(`Avg. of ${tries} tries with ${iterations} iterations took ${(result/1000).toFixed(2)}s (${result}ms)`)
     }
     </script>

@@ -14,7 +14,7 @@ declare let style // eslint-disable-line no-unused-vars
 
 let shadowRoot
 let template = document.createElement('template')
-template.innerHTML = `${style}\n<slot></slot>`
+template.innerHTML = `<style>${style}</style>\n<slot></slot>`
 
 class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
   /* Typescript: declare variables */
@@ -103,13 +103,10 @@ class Grid extends HTMLElement { // eslint-disable-line no-unused-vars
    * @description check the size of the element and react if nessesary
    */
   private _elementQuery (element) {
-    let gridGap = window.getComputedStyle(element).gridColumnGap
+    // measure width without gap
+    element.style.gridColumnGap = 0
     let elementWidth = element.clientWidth
-    if (parseInt(gridGap) > 0) {
-      element.style.gridColumnGap = 0
-      elementWidth = element.clientWidth
-      element.style.gridColumnGap = gridGap
-    }
+    element.style.gridColumnGap = null
     // state variable
     let prev = null
     // get last item
