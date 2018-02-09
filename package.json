@@ -22,16 +22,16 @@
   "author": "Lukas Oppermann",
   "license": "MIT",
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "^1.0.22",
-    "rollup": "^0.50.1",
-    "rollup-plugin-node-resolve": "^3.0.0",
+    "@webcomponents/webcomponentsjs": "^1.1.0",
+    "rollup": "^0.55.4",
+    "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-typescript": "^0.8.1",
     "rollup-watch": "^4.0.0",
     "snazzy": "^7.0.0",
     "standard": "^10.0.2",
     "standard-readme": "^2.0.2",
-    "typescript": "^2.6.2",
-    "typescript-eslint-parser": "^8.0.1"
+    "typescript": "^2.7.1",
+    "typescript-eslint-parser": "^13.0.0"
   },
   "scripts": {
     "building": "npm test && rollup -c --intro \"let style = \\`$(cat src/style.css)\\`\"",
