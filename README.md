@@ -5,6 +5,9 @@
 [![Build Status](https://img.shields.io/travis/nuclei/grid/master.svg?style=flat-square)](https://travis-ci.org/nuclei/grid) [![npm](https://img.shields.io/npm/v/@nuclei-components/grid.svg?style=flat-square)](https://www.npmjs.com/package/@nuclei-components/grid)
 [![Known Vulnerabilities](https://snyk.io/test/github/nuclei/grid/badge.svg?style=flat-square)](https://snyk.io/test/github/nuclei/grid) [![npm](https://img.shields.io/npm/dt/@nuclei-components/grid.svg?style=flat-square)](https://www.npmjs.com/package/@nuclei-components/grid) [![license](https://img.shields.io/github/license/nuclei/grid.svg?style=flat-square)](https://github.com/nuclei/grid/blob/master/LICENSE)
 
+## NOT MAINAINED
+Since grids have become so easy to build with css grid, there is no need for this project and it will not be maintained anymore.
+
 ## Demo
 [Grid](https://grid.github.io/grid/index.html)
 
